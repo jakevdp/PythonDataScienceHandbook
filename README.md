@@ -1,5 +1,10 @@
-# PythonDataScienceHandbook
-Supplemental materials for my OReilly project, the Python Data Science Handbook
+# Python Data Science Handbook Supplemental Materials
+
+Supplemental materials for my OReilly project, the
+[Python Data Science Handbook](http://shop.oreilly.com/product/0636920034919.do)
+
+![cover image](cover-early-release.jpg)
+
 
 ## Code Listings
 
