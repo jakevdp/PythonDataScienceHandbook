@@ -5,6 +5,8 @@ Supplemental materials for my OReilly project, the
 
 ![cover image](cover-early-release.jpg)
 
+See also the free companion project, [A Whirlwind Tour of Python](https://github.com/jakevdp/WhirlwindTourOfPython).
+
 
 ## Code Listings
 
