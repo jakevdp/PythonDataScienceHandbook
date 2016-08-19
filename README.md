@@ -23,7 +23,7 @@ can be found in the online-only [Figure Appendix](figure_appendix/06.00-Figure-C
 
 ## Full Notebooks
 
-I am still negotiating with OReilly the open publication of the full manuscript in the form of Jupyter notebooks. Stay tuned!
+The full notebooks, containing the entire text of the book, will be posted here as soon as the copy-edit process is finished. Stay tuned!
 
 
 ## License
