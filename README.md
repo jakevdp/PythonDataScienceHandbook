@@ -12,6 +12,8 @@ See also the free companion project, [A Whirlwind Tour of Python](https://github
 
 All the code from the book can be found in [code_listings](code_listings).
 The code is in IPython notebooks, organized by book chapter and section.
+All code from this book was tested with Python 3.4-3.5, though it should be
+near 100% compatible with Python 2.7 as well.
 
 
 ## Figure Appendix
