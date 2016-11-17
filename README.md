@@ -25,9 +25,10 @@ can be found in the online-only [Figure Appendix](figure_appendix/06.00-Figure-C
 
 ## Full Notebooks
 
-The full notebooks, containing the entire text of the book, will be posted here as soon as the copy-edit process is finished. Stay tuned!
+The full notebooks, containing the entire text of the book, are being edited and will be posted in [notebooks](notebooks).
 
 
 ## License
+The code here is released under the [MIT license](LICENSE-CODE). Read more at the [Open Source Initiative](https://opensource.org/licenses/MIT).
 
-The code here is released under the [MIT license](LICENSE). Read more at the [Open Source Initiative](https://opensource.org/licenses/MIT).
+The textual content of the book is released under the [CC-BY-NC-ND license](LICENSE-TEXT). Read more at [Creative Commons](https://creativecommons.org/licenses/by-nc-nd/3.0/us/legalcode).
