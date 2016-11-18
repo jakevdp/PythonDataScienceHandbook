@@ -11,9 +11,9 @@ This repository will contain the full listing of IPython notebooks used to creat
 
 ### [Contents](notebooks/Index.ipynb)
 
-#### [Python Data Science Handbook](notebooks/00.00-Preface.ipynb)
+#### [Preface](notebooks/00.00-Preface.ipynb)
 
-#### [IPython: Beyond Normal Python](notebooks/01.00-IPython-Beyond-Normal-Python.ipynb)
+#### [1. IPython: Beyond Normal Python](notebooks/01.00-IPython-Beyond-Normal-Python.ipynb)
 - [Help and Documentation in IPython](notebooks/01.01-Help-And-Documentation.ipynb)
 - [Keyboard Shortcuts in the IPython Shell](notebooks/01.02-Shell-Keyboard-Shortcuts.ipynb)
 - [IPython Magic Commands](notebooks/01.03-Magic-Commands.ipynb)
