@@ -36,11 +36,14 @@ def iter_navbars():
 def write_navbars():
     for nb_name, navbar in iter_navbars():
         nb = nbformat.read(nb_name, as_version=4)
+        nb_file = os.path.basename(nb_name)
         is_comment = lambda cell: cell.source.startswith(NAV_COMMENT)
 
         if is_comment(nb.cells[1]):
+            print("- amending navbar for {0}".format(nb_file))
             nb.cells[1].source = navbar
         else:
+            print("- inserting navbar for {0}".format(nb_file))
             nb.cells.insert(1, new_markdown_cell(source=navbar))
 
         if is_comment(nb.cells[-1]):
