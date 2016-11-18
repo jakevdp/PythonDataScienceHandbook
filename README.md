@@ -25,7 +25,16 @@ can be found in the online-only [Figure Appendix](figure_appendix/06.00-Figure-C
 
 ## Full Notebooks
 
-The full notebooks, containing the entire text of the book, are being edited and will be posted in [notebooks](notebooks).
+The full notebooks, containing the entire text of the book, are being edited and will be made available in [notebooks](notebooks).
+
+### Contents:
+
+#### [Preface](notebooks/00.00-Preface.ipynb) 
+#### 1. [IPython: Beyond Normal Python](notebooks/01.00-IPython-Beyond-Normal-Python.ipynb)
+#### 2. Introduction to NumPy *(coming soon)*
+#### 3. Data Manipulation with Pandas *(coming soon)*
+#### 4. Visualization with Matplotlib *(coming soon)*
+#### 5. Machine Learning *(coming soon)*
 
 
 ## License
