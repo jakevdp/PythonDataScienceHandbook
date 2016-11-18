@@ -10,12 +10,26 @@ See also the free companion project, [A Whirlwind Tour of Python](https://github
 This repository will contain the full listing of IPython notebooks used to create the book, including all text and code. I am currently editing these, and will post them as I make my way through. See the content here:
 
 ### [Contents](notebooks/Index.ipynb)
-### [Preface](notebooks/00.00-Preface.ipynb) 
-### 1. [IPython: Beyond Normal Python](notebooks/01.00-IPython-Beyond-Normal-Python.ipynb)
-### 2. Introduction to NumPy *(coming soon)*
-### 3. Data Manipulation with Pandas *(coming soon)*
-### 4. Visualization with Matplotlib *(coming soon)*
-### 5. Machine Learning *(coming soon)*
+
+#### [Python Data Science Handbook](notebooks/00.00-Preface.ipynb)
+
+#### [IPython: Beyond Normal Python](notebooks/01.00-IPython-Beyond-Normal-Python.ipynb)
+- [Help and Documentation in IPython](notebooks/01.01-Help-And-Documentation.ipynb)
+- [Keyboard Shortcuts in the IPython Shell](notebooks/01.02-Shell-Keyboard-Shortcuts.ipynb)
+- [IPython Magic Commands](notebooks/01.03-Magic-Commands.ipynb)
+- [Input and Output History](notebooks/01.04-Input-Output-History.ipynb)
+- [IPython and Shell Commands](notebooks/01.05-IPython-And-Shell-Commands.ipynb)
+- [Errors and Debugging](notebooks/01.06-Errors-and-Debugging.ipynb)
+- [Profiling and Timing Code](notebooks/01.07-Timing-and-Profiling.ipynb)
+- [More IPython Resources](notebooks/01.08-More-IPython-Resources.ipynb)
+
+#### 2. Introduction to NumPy *(coming soon)*
+
+#### 3. Data Manipulation with Pandas *(coming soon)*
+
+#### 4. Visualization with Matplotlib *(coming soon)*
+
+#### 5. Machine Learning *(coming soon)*
 
 
 ## Code Listings
