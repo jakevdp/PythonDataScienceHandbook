@@ -1,10 +1,7 @@
 import os
 import re
 import itertools
-
-PREV_TEMPLATE = " <[{title}]({url}) "
-CONTENTS = "| [Contents](Index.ipynb)| "
-NEXT_TEMPLATE = " [{title}](url) >"
+import nbformat
 
 NOTEBOOK_DIR = os.path.join(os.path.dirname(__file__), '..', 'notebooks')
 
@@ -17,40 +14,37 @@ CHAPTERS = {"00": "Preface",
 
 REG = re.compile(r'(\d\d)\.(\d\d)-(.*)\.ipynb')
 
-notebooks = sorted(nb for nb in os.listdir(NOTEBOOK_DIR) if REG.match(nb))
 
-def prev_this_next(it):
-    a, b, c = itertools.tee(it,3)
-    next(c)
-    return zip(itertools.chain([None], a), b, itertools.chain(c, [None]))
+def iter_notebooks():
+    return sorted(nb for nb in os.listdir(NOTEBOOK_DIR) if REG.match(nb))
 
 
+def get_notebook_title(nb_file):
+    nb = nbformat.read(os.path.join(NOTEBOOK_DIR, nb_file), as_version=4)
+    for cell in nb.cells:
+        if cell.source.startswith('#'):
+            return cell.source[1:].splitlines()[0].strip()
 
 
-def iter_navbars(notebooks):
-    for prev_nb, nb, next_nb in prev_this_next(notebooks):
-        navbar = ""
-        if prev_nb:
-            navbar += PREV_TEMPLATE.format(title=REG.match(prev_nb).groups()[2],
-                                           url=prev_nb)
-        navbar += CONTENTS
-        if next_nb:
-            navbar += NEXT_TEMPLATE.format(title=REG.match(next_nb).groups()[2],
-                                           url=next_nb)
-        yield navbar
-
-
-def gen_contents(notebooks):
-    def get_chapter(nb):
-        return REG.match(nb).groups()[0]
-    
-    for nb in notebooks:
-        chapter, section, title = REG.match(nb).groups()
-        title = title.replace('-', ' ')
-        if section == '00':
-            yield '\n### [{0}]({1})'.format(title, nb)
+def gen_contents(directory=None):
+    for nb in iter_notebooks():
+        if directory:
+            nb_url = os.path.join(directory, nb)
         else:
-            yield "- [{0}]({1})".format(title, nb)
+            nb_url = nb
+        chapter, section, title = REG.match(nb).groups()
+        title = get_notebook_title(nb)
+        if section == '00':
+            yield '\n### [{0}]({1})'.format(title, nb_url)
+        else:
+            yield "- [{0}]({1})".format(title, nb_url)
 
 
-print('\n'.join(gen_contents(notebooks)))
+def print_contents(directory=None):
+    print('\n'.join(gen_contents(directory)))
+
+
+if __name__ == '__main__':
+    print_contents()
+    print(70 * '#')
+    print_contents('notebooks')
