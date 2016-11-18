@@ -1,5 +1,9 @@
 numpy=1.11
+pandas=0.18.1
 scipy=0.17.1
 sklearn=0.17.1
 matplotlib=1.5.1
-notebook=4.2.3
+jupyter
+notebook
+line_profiler
+memory_profiler
