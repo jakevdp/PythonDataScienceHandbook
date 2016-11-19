@@ -9,11 +9,13 @@ See also the free companion project, [A Whirlwind Tour of Python](https://github
 
 This repository will contain the full listing of IPython notebooks used to create the book, including all text and code. I am currently editing these, and will post them as I make my way through. See the content here:
 
-### [Contents](notebooks/Index.ipynb)
+---
+
+### [Table of Contents](notebooks/Index.ipynb)
 
 ### [Preface](notebooks/00.00-Preface.ipynb)
 
-### [IPython: Beyond Normal Python](notebooks/01.00-IPython-Beyond-Normal-Python.ipynb)
+### [1. IPython: Beyond Normal Python](notebooks/01.00-IPython-Beyond-Normal-Python.ipynb)
 - [Help and Documentation in IPython](notebooks/01.01-Help-And-Documentation.ipynb)
 - [Keyboard Shortcuts in the IPython Shell](notebooks/01.02-Shell-Keyboard-Shortcuts.ipynb)
 - [IPython Magic Commands](notebooks/01.03-Magic-Commands.ipynb)
@@ -23,7 +25,7 @@ This repository will contain the full listing of IPython notebooks used to creat
 - [Profiling and Timing Code](notebooks/01.07-Timing-and-Profiling.ipynb)
 - [More IPython Resources](notebooks/01.08-More-IPython-Resources.ipynb)
 
-### [Introduction to NumPy](notebooks/02.00-Introduction-to-NumPy.ipynb)
+### [2. Introduction to NumPy](notebooks/02.00-Introduction-to-NumPy.ipynb)
 - [Understanding Data Types in Python](notebooks/02.01-Understanding-Data-Types.ipynb)
 - [The Basics of NumPy Arrays](notebooks/02.02-The-Basics-Of-NumPy-Arrays.ipynb)
 - [Computation on NumPy Arrays: Universal Functions](notebooks/02.03-Computation-on-arrays-ufuncs.ipynb)
