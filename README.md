@@ -11,9 +11,9 @@ This repository will contain the full listing of IPython notebooks used to creat
 
 ### [Contents](notebooks/Index.ipynb)
 
-#### [Preface](notebooks/00.00-Preface.ipynb)
+### [Preface](notebooks/00.00-Preface.ipynb)
 
-#### [1. IPython: Beyond Normal Python](notebooks/01.00-IPython-Beyond-Normal-Python.ipynb)
+### [IPython: Beyond Normal Python](notebooks/01.00-IPython-Beyond-Normal-Python.ipynb)
 - [Help and Documentation in IPython](notebooks/01.01-Help-And-Documentation.ipynb)
 - [Keyboard Shortcuts in the IPython Shell](notebooks/01.02-Shell-Keyboard-Shortcuts.ipynb)
 - [IPython Magic Commands](notebooks/01.03-Magic-Commands.ipynb)
@@ -23,13 +23,24 @@ This repository will contain the full listing of IPython notebooks used to creat
 - [Profiling and Timing Code](notebooks/01.07-Timing-and-Profiling.ipynb)
 - [More IPython Resources](notebooks/01.08-More-IPython-Resources.ipynb)
 
-#### 2. Introduction to NumPy *(coming soon)*
+### [Introduction to NumPy](notebooks/02.00-Introduction-to-NumPy.ipynb)
+- [Understanding Data Types in Python](notebooks/02.01-Understanding-Data-Types.ipynb)
+- [The Basics of NumPy Arrays](notebooks/02.02-The-Basics-Of-NumPy-Arrays.ipynb)
+- [Computation on NumPy Arrays: Universal Functions](notebooks/02.03-Computation-on-arrays-ufuncs.ipynb)
+- [Aggregations: Min, Max, and Everything In Between](notebooks/02.04-Computation-on-arrays-aggregates.ipynb)
+- [Computation on Arrays: Broadcasting](notebooks/02.05-Computation-on-arrays-broadcasting.ipynb)
+- [Comparisons, Masks, and Boolean Logic](notebooks/02.06-Boolean-Arrays-and-Masks.ipynb)
+- [Fancy Indexing](notebooks/02.07-Fancy-Indexing.ipynb)
+- [Sorting Arrays](notebooks/02.08-Sorting.ipynb)
+- [Structured Data: NumPy's Structured Arrays](notebooks/02.09-Structured-Data-NumPy.ipynb)
 
 #### 3. Data Manipulation with Pandas *(coming soon)*
 
 #### 4. Visualization with Matplotlib *(coming soon)*
 
 #### 5. Machine Learning *(coming soon)*
+
+### [Appendix: Figure Code](notebooks/06.00-Figure-Code.ipynb)
 
 
 ## Code Listings
