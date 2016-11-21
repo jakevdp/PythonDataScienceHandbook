@@ -8,3 +8,4 @@ notebook
 line_profiler
 memory_profiler
 numexpr
+seaborn
