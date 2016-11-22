@@ -47,4 +47,4 @@ def print_contents(directory=None):
 if __name__ == '__main__':
     print_contents()
     print(70 * '#')
-    print_contents('notebooks')
+    print_contents('http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/')
