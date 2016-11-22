@@ -9,3 +9,4 @@ line_profiler
 memory_profiler
 numexpr
 seaborn
+pandas-datareader
