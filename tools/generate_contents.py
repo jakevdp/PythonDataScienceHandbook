@@ -35,7 +35,11 @@ def gen_contents(directory=None):
         chapter, section, title = REG.match(nb).groups()
         title = get_notebook_title(nb)
         if section == '00':
-            yield '\n### [{0}]({1})'.format(title, nb_url)
+            if chapter in ['00', '06']:
+                yield '\n### [{0}]({1})'.format(title, nb_url)
+            else:
+                yield '\n### [{0}. {1}]({2})'.format(int(chapter),
+                                                     title, nb_url)
         else:
             yield "- [{0}]({1})".format(title, nb_url)
 
@@ -46,5 +50,5 @@ def print_contents(directory=None):
 
 if __name__ == '__main__':
     print_contents()
-    print(70 * '#')
+    print('\n', 70 * '#', '\n')
     print_contents('http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/')

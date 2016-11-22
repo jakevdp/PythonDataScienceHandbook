@@ -38,22 +38,35 @@ I am currently editing these notebooks, and will post them as I make my way thro
 - [Sorting Arrays](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/02.08-Sorting.ipynb)
 - [Structured Data: NumPy's Structured Arrays](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/02.09-Structured-Data-NumPy.ipynb)
 
-#### 3. Data Manipulation with Pandas *(coming soon)*
+### [3. Data Manipulation with Pandas](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.00-Introduction-to-Pandas.ipynb)
+- [Introducing Pandas Objects](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.01-Introducing-Pandas-Objects.ipynb)
+- [Data Indexing and Selection](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.02-Data-Indexing-and-Selection.ipynb)
+- [Operating on Data in Pandas](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.03-Operations-in-Pandas.ipynb)
+- [Handling Missing Data](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.04-Missing-Values.ipynb)
+- [Hierarchical Indexing](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.05-Hierarchical-Indexing.ipynb)
+- [Combining Datasets: Concat and Append](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.06-Concat-And-Append.ipynb)
+- [Combining Datasets: Merge and Join](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.07-Merge-and-Join.ipynb)
+- [Aggregation and Grouping](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.08-Aggregation-and-Grouping.ipynb)
+- [Pivot Tables](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.09-Pivot-Tables.ipynb)
+- [Vectorized String Operations](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.10-Working-With-Strings.ipynb)
+- [Working with Time Series](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.11-Working-with-Time-Series.ipynb)
+- [High-Performance Pandas: eval() and query()](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.12-Performance-Eval-and-Query.ipynb)
+- [Further Resources](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.13-Further-Resources.ipynb)
 
 #### 4. Visualization with Matplotlib *(coming soon)*
 
 #### 5. Machine Learning *(coming soon)*
 
-### [Appendix: Figure Code](notebooks/06.00-Figure-Code.ipynb)
+### [Appendix: Figure Code](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/06.00-Figure-Code.ipynb)
 
 
 ## Code Listings
 
 The notebooks above are still being edited. In the meantime, you can see all
-the code from the book in [code_listings](code_listings).
+the code from an earlier draft of the book in [code_listings](code_listings).
 The code is in IPython notebooks, organized by book chapter and section.
-All code from this book was tested with Python 3.4-3.5, though it should be
-near 100% compatible with Python 2.7 as well.
+All code from this book was tested with Python 3.4-3.5, though most of it
+is compatible with Python 2.7 as well.
 
 
 ## Figure Appendix
