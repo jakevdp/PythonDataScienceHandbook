@@ -7,9 +7,9 @@ Jupyter notebook content for my OReilly book, the
 
 See also the free companion project, [A Whirlwind Tour of Python](https://github.com/jakevdp/WhirlwindTourOfPython): a fast-paced introduction to the Python language aimed at researchers and scientists.
 
-This repository will contain the full listing of IPython notebooks used to create the book, including all text and code. The code is Python 3.X, though most (but not all) snippets will work correctly in Python 2.7.
+This repository will contain the full listing of IPython notebooks used to create the book, including all text and code. The code was tested with Python 3.5, though most (but not all) snippets will work correctly in Python 2.7.
 
-I am currently editing these notebooks, and will post them as I make my way through. See the content here:
+I am currently doing the final edits of these notebooks, and will post them as I make my way through. See the content here:
 
 ---
 
