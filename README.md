@@ -72,6 +72,7 @@ I am currently doing the final edits of these notebooks, and will post them as I
 
 ### [Appendix: Figure Code](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/06.00-Figure-Code.ipynb)
 
+---
 
 ## Required Packages
 
@@ -94,13 +95,15 @@ You can read more about using conda environments in the [Managing Environments](
 
 ## Code Listings
 
-The notebooks above are still being edited. In the meantime, you can see all
-the code from an earlier draft of the book in [code_listings](code_listings).
-The code is in IPython notebooks, organized by book chapter and section.
-All code from this book was tested with Python 3.4-3.5, though most of it
-is compatible with Python 2.7 as well.
+The notebooks above are still being edited. In the meantime, you can see the
+code from an earlier draft of the book in [code_listings](code_listings).
+This will be removed once the full notebooks are posted.
+
 
 ## License
-The code here is released under the [MIT license](LICENSE-CODE). Read more at the [Open Source Initiative](https://opensource.org/licenses/MIT).
 
+### Code
+The code in this repository, including all code samples in the notebooks listed above, is released under the [MIT license](LICENSE-CODE). Read more at the [Open Source Initiative](https://opensource.org/licenses/MIT).
+
+### Text
 The text content of the book is released under the [CC-BY-NC-ND license](LICENSE-TEXT). Read more at [Creative Commons](https://creativecommons.org/licenses/by-nc-nd/3.0/us/legalcode).
