@@ -92,6 +92,9 @@ ENV/
 # Emacs
 *~
 
+
 # Temporary data files
 notebooks/recipeitems-latest.json
 notebooks/FremontBridge.csv
+notebooks/gistemp250.nc
+notebooks/my_figure.png
