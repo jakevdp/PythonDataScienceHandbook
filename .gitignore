@@ -97,4 +97,5 @@ ENV/
 notebooks/recipeitems-latest.json
 notebooks/FremontBridge.csv
 notebooks/gistemp250.nc
+notebooks/marathon-data.csv
 notebooks/my_figure.png
