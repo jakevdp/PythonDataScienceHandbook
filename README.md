@@ -68,10 +68,9 @@ I am currently doing the final edits of these notebooks, and will post them as I
 - [Visualization with Seaborn](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/04.14-Visualization-With-Seaborn.ipynb)
 - [Further Resources](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/04.15-Further-Resources.ipynb)
 
-#### 5. Machine Learning *(coming soon)*
+### 5. Machine Learning *(coming soon)*
 
 ### [Appendix: Figure Code](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/06.00-Figure-Code.ipynb)
-jakesmac:PythonDataScienceHandbook jakevdp$ emacs README.md
 
 
 ## Required Packages
