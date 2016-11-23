@@ -74,6 +74,25 @@ I am currently doing the final edits of these notebooks, and will post them as I
 jakesmac:PythonDataScienceHandbook jakevdp$ emacs README.md
 
 
+## Required Packages
+
+The code in the book was tested with Python 3.5, though most (but not all) will also work correctly with Python 2.7 and other older Python versions.
+
+The packages required to run the code in the book are listed in [requirements.txt](requirements.txt). To install these using [conda](http://conda.pydata.org), run the following at the command-line:
+
+```
+$ conda install --file requirements.txt
+```
+
+To create a stand-alone environment named ``PDSH`` with Python 3.5 and all the required package versions, run the following:
+
+```
+$ conda create -n PDSH python=3.5 --file requirements.txt
+```
+
+You can read more about using conda environments in the [Managing Environments](http://conda.pydata.org/docs/using/envs.html) section of the conda documentation.
+
+
 ## Code Listings
 
 The notebooks above are still being edited. In the meantime, you can see all
