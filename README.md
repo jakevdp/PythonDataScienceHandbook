@@ -5,13 +5,12 @@ Jupyter notebook content for my OReilly book, the
 
 ![cover image](notebooks/figures/PDSH-cover.png)
 
-This repository will contain the full listing of IPython notebooks used to create the book, including all text and code. The code was tested with Python 3.5, though most (but not all) snippets will work correctly in Python 2.7.
+This repository contains the full listing of IPython notebooks used to create the book, including all text and code. The code was written and tested with Python 3.5, though most (but not all) snippets will work correctly in Python 2.7.
 
 See also the free companion project, [A Whirlwind Tour of Python](https://github.com/jakevdp/WhirlwindTourOfPython): a fast-paced introduction to the Python language aimed at researchers and scientists.
 
-I am currently doing the final edits of these notebooks, and will post them as I make my way through. See the content here:
-
 ---
+## [Table of Contents](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/Index.ipynb)
 
 ### [Preface](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/00.00-Preface.ipynb)
 
@@ -106,13 +105,6 @@ $ conda create -n PDSH python=3.5 --file requirements.txt
 ```
 
 You can read more about using conda environments in the [Managing Environments](http://conda.pydata.org/docs/using/envs.html) section of the conda documentation.
-
-
-## Code Listings
-
-The notebooks above are still being edited. In the meantime, you can see the
-code from an earlier draft of the book in [code_listings](code_listings).
-This will be removed once the full notebooks are posted.
 
 
 ## License
