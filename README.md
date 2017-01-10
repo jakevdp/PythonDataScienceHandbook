@@ -1,13 +1,16 @@
 # Python Data Science Handbook
 
-Jupyter notebook content for my OReilly book, the
-[Python Data Science Handbook](http://shop.oreilly.com/product/0636920034919.do)
+This repository contains entire [Python Data Science Handbook](http://shop.oreilly.com/product/0636920034919.do), in the form of (free!) Jupyter notebooks.
 
 ![cover image](notebooks/figures/PDSH-cover.png)
 
-This repository contains the full listing of IPython notebooks used to create the book, including all text and code. The code was written and tested with Python 3.5, though most (but not all) snippets will work correctly in Python 2.7.
+This repository contains the full listing of IPython notebooks behind the [Python Data Science Handbook](http://shop.oreilly.com/product/0636920034919.do), including all text, code, and figures. The book was written and tested with Python 3.5, though older Python versions (including Python 2.7) should work in nearly all cases.
 
-See also the free companion project, [A Whirlwind Tour of Python](https://github.com/jakevdp/WhirlwindTourOfPython): a fast-paced introduction to the Python language aimed at researchers and scientists.
+The book introduces the core libraries essential for working with data in Python: particularly [IPython](http://ipython.org), [NumPy](http://numpy.org), [Pandas](http://pandas.pydata.org), [Matplotlib](http://matplotlib.org), [Scikit-Learn](http://scikit-learn.org), and related packages.
+Familiarity with Python as a language is assumed; if you need a quick introduction to the language itself, see the free companion project,
+[A Whirlwind Tour of Python](https://github.com/jakevdp/WhirlwindTourOfPython): it's a fast-paced introduction to the Python language aimed at researchers and scientists.
+
+The following listing links to the notebooks in this repository, rendered through the [nbviewer](http://nbviewer.jupyter.org) service:
 
 ---
 ## [Table of Contents](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/Index.ipynb)
