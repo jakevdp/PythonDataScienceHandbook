@@ -4,7 +4,7 @@ This repository contains the entire [Python Data Science Handbook](http://shop.o
 
 ![cover image](notebooks/figures/PDSH-cover.png)
 
-This repository contains the full listing of IPython notebooks behind the [Python Data Science Handbook](http://shop.oreilly.com/product/0636920034919.do), including all text, code, and figures. The book was written and tested with Python 3.5, though older Python versions (including Python 2.7) should work in nearly all cases.
+The book was written and tested with Python 3.5, though older Python versions (including Python 2.7) should work in nearly all cases.
 
 The book introduces the core libraries essential for working with data in Python: particularly [IPython](http://ipython.org), [NumPy](http://numpy.org), [Pandas](http://pandas.pydata.org), [Matplotlib](http://matplotlib.org), [Scikit-Learn](http://scikit-learn.org), and related packages.
 Familiarity with Python as a language is assumed; if you need a quick introduction to the language itself, see the free companion project,
@@ -95,7 +95,8 @@ The following listing links to the notebooks in this repository, rendered throug
 
 The code in the book was tested with Python 3.5, though most (but not all) will also work correctly with Python 2.7 and other older Python versions.
 
-The packages required to run the code in the book are listed in [requirements.txt](requirements.txt). To install these using [conda](http://conda.pydata.org), run the following at the command-line:
+The packages I used to run the code in the book are listed in [requirements.txt](requirements.txt) (Note that some of these exact version numbers may not be available on your platform: you may have to tweak them for your own use).
+To install the requirements using [conda](http://conda.pydata.org), run the following at the command-line:
 
 ```
 $ conda install --file requirements.txt
