@@ -12,5 +12,4 @@ line_profiler
 memory_profiler
 numexpr
 pandas-datareader
-basemap
 netcdf4
