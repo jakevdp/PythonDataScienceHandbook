@@ -10,10 +10,10 @@ import sys
 sys.path.append(os.curdir)
 from pelicanconf import *
 
-SITEURL = 'http://jakevdp.github.io'
+SITEURL = 'http://jakevdp.github.io/PythonDataScienceHandbook'
 RELATIVE_URLS = False
 
-SHOW_FEED = True
+SHOW_FEED = False
 FEED_ALL_ATOM = 'feeds/all.atom.xml'
 CATEGORY_FEED_ATOM = 'feeds/%s.atom.xml'
 FEED_USE_SUMMARY = True  # from the feed_summary plugin

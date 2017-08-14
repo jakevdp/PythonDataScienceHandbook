@@ -8,7 +8,7 @@ import shutil
 
 PAGEFILE = """title: {title}
 slug: {slug}
-Template: page
+Template: {template}
 
 {{% notebook notebooks/{notebook_file} cells[{cells}] %}}
 """
@@ -38,7 +38,7 @@ def copy_notebooks():
     shutil.copytree(figsource, figdest)
 
     figurelist = os.listdir(abspath_from_here('content', 'figures'))
-    figure_map = {os.path.join('figures', fig) : os.path.join('/figures', fig)
+    figure_map = {os.path.join('figures', fig) : os.path.join('/PythonDataScienceHandbook/figures', fig)
                   for fig in figurelist}
 
     for nb in nblist:
@@ -50,16 +50,20 @@ def copy_notebooks():
 
         if nb == 'Index.ipynb':
             cells = '1:'
+            template = 'page'
             title = 'Python Data Science Handbook'
         else:
             cells = '2:'
-            # put nav below title
+            template = 'booksection'
             title = content.cells[2].source
             if not title.startswith('#') or len(title.splitlines()) > 1:
                 raise ValueError('title not found in third cell')
             title = title.lstrip('#').strip()
-            content.cells[1], content.cells[2] = content.cells[2], content.cells[1]
 
+            # put nav below title
+            content.cells[0], content.cells[1], content.cells[2] = content.cells[2], content.cells[0], content.cells[1]
+
+        # Replace internal URLs and figure links in notebook
         for cell in content.cells:
             if cell.cell_type == 'markdown':
                 for nbname, htmlname in name_map.items():
@@ -76,6 +80,7 @@ def copy_notebooks():
             f.write(PAGEFILE.format(title=title,
                                     slug=base.lower(),
                                     notebook_file=nb,
+                                    template=template,
                                     cells=cells))
 
 if __name__ == '__main__':

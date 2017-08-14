@@ -54,6 +54,7 @@ TWITTER_USERNAME = 'jakevdp'
 GITHUB_USERNAME = 'jakevdp'
 STACKOVERFLOW_ADDRESS = 'http://stackoverflow.com/users/2937831/jakevdp'
 AUTHOR_WEBSITE = 'http://vanderplas.com'
+AUTHOR_BLOG = 'http://jakevdp.github.io'
 AUTHOR_CV = "http://staff.washington.edu/jakevdp/media/pdfs/CV.pdf"
 SHOW_ARCHIVES = True
 SHOW_FEED = False  # Need to address large feeds
