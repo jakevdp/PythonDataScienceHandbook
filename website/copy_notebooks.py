@@ -27,7 +27,7 @@ PAGE_DEST_DIR = abspath_from_here('content', 'pages')
 def copy_notebooks():
     nblist = sorted(nb for nb in os.listdir(NB_SOURCE_DIR)
                     if nb.endswith('.ipynb'))
-    name_map = {nb: nb.rsplit('.', 1)[0] + '.html'
+    name_map = {nb: nb.rsplit('.', 1)[0].lower() + '.html'
                 for nb in nblist}
 
     figsource = abspath_from_here('..', 'notebooks', 'figures')
@@ -78,7 +78,7 @@ def copy_notebooks():
         pagefile = os.path.join(PAGE_DEST_DIR, base + '.md')
         with open(pagefile, 'w') as f:
             f.write(PAGEFILE.format(title=title,
-                                    slug=base,
+                                    slug=base.lower(),
                                     notebook_file=nb,
                                     template=template,
                                     cells=cells))
