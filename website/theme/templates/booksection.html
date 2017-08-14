@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}{{ page.title }}{% endblock %}
+{% block headerimg %}{% if page.headerimg %}{{ page.headerimg }}{% else %}{{ DEFAULT_HEADER_BG }}{% endif %}{% endblock %}
+
+{% block content %}
+
+<div class="container bookinfo">
+<p>
+<img align="left" style="padding-right:10px;" src="/PythonDataScienceHandbook/figures/PDSH-cover-small.png">
+<em>This is an excerpt from the <a href="http://shop.oreilly.com/product/0636920034919.do">Python Data Science Handbook</a> by Jake VanderPlas; Jupyter notebooks are available <a href="https://github.com/jakevdp/PythonDataScienceHandbook">on GitHub</a>.</em>
+</p>
+<p>
+<em>The text is released under the <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/us/legalcode">CC-BY-NC-ND license</a>, and code is released under the <a href="https://opensource.org/licenses/MIT">MIT license</a>. If you find this content useful, please consider supporting the work by <a href="http://shop.oreilly.com/product/0636920034919.do">buying the book</a>!</em>
+</p>
+</div>
+
+
+<div class="container post">
+
+    <article>
+        <header>
+            <h1>{{ page.title }}</h1>
+            {% if page.date %}
+                <time datetime="page.date.isoformat()" pubdate>{{ page.locale_date }}</time>
+            {% endif %}
+        </header>
+
+        <div class="article_content">
+            {{ page.content }}
+        </div>
+
+    </article>
+</div>
+{% endblock %}

@@ -78,7 +78,7 @@ def copy_notebooks():
         pagefile = os.path.join(PAGE_DEST_DIR, base + '.md')
         with open(pagefile, 'w') as f:
             f.write(PAGEFILE.format(title=title,
-                                    slug=base.lower(),
+                                    slug=base,
                                     notebook_file=nb,
                                     template=template,
                                     cells=cells))
