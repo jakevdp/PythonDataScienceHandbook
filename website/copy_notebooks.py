@@ -27,7 +27,8 @@ PAGE_DEST_DIR = abspath_from_here('content', 'pages')
 def copy_notebooks():
     nblist = sorted(nb for nb in os.listdir(NB_SOURCE_DIR)
                     if nb.endswith('.ipynb'))
-    name_map = {nb: nb.rsplit('.', 1)[0].lower() + '.html'
+    name_map = {nb: os.path.join('/PythonDataScienceHandbook', 'pages',
+                                 nb.rsplit('.', 1)[0].lower() + '.html')
                 for nb in nblist}
 
     figsource = abspath_from_here('..', 'notebooks', 'figures')
