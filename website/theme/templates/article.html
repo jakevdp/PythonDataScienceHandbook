@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}{{ article.title }}{% endblock %}
+{% block headerimg %}{% if article.headerimg %}{{ article.headerimg }}{% else %}{{ DEFAULT_HEADER_BG }}{% endif %}{% endblock %}
+
+{% block extra_head %}
+{% if 'angular' in article.include %}
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+{% endif %}
+{% if 'jquery' in article.include %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container post">
+    <article>
+        <header>
+            <h1>{{ article.title }}</h1>
+            <time datetime="article.date.isoformat()" pubdate>{{ article.locale_date }}</time>
+        </header>
+
+        <div class="article_content">
+            {{ article.content }}
+        </div>
+
+        <div class="meta">
+            <div>
+                {% for tag in article.tags %}
+                    <a href="{{ SITEURL }}/{{ tag.url }}" class="tag">{{ tag }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </article>
+
+  {% include '_includes/disqus_thread.html' %}
+
+</div>
+
+<style type="text/css">
+{% include 'ipynb.css' %}
+</style>
+
+{% endblock %}

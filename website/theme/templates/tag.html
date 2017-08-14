@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Archives{% endblock %}
+{% block headerimg %}{{ DEFAUT_HEADER_BG }}{% endblock %}
+
+{% block content %}
+<div class="container list">
+    <article>
+        <h1 style="margin-bottom: 30px;">Tag: {{ tag }}</h1>
+
+        <ul class="double-list">
+        {% for article in articles %}
+            <li>
+                <a href='/{{ article.url }}'>
+                    <h2>{{ article.title }}</h2>
+                    <span>{{ article.date.strftime('%d.%m.%Y') }}</span>
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    </article>
+</div>
+{% endblock %}

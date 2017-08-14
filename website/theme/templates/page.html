@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ page.title }}{% endblock %}
+{% block headerimg %}{% if page.headerimg %}{{ page.headerimg }}{% else %}{{ DEFAULT_HEADER_BG }}{% endif %}{% endblock %}
+
+{% block content %}
+<div class="container post">
+
+    <article>
+        <header>
+            <h1>{{ page.title }}</h1>
+            {% if page.date %}
+                <time datetime="page.date.isoformat()" pubdate>{{ page.locale_date }}</time>
+            {% endif %}
+        </header>
+
+        <div class="article_content">
+            {{ page.content }}
+        </div>
+
+    </article>
+</div>
+{% endblock %}
