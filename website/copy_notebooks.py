@@ -14,6 +14,13 @@ Template: {template}
 {{% notebook notebooks/{notebook_file} cells[{cells}] %}}
 """
 
+INTRO_TEXT = """This website contains the full text of the [Python Data Science Handbook](http://shop.oreilly.com/product/0636920034919.do) by Jake VanderPlas; the content is available [on GitHub](https://github.com/jakevdp/PythonDataScienceHandbook) in the form of Jupyter notebooks.
+
+The text is released under the [CC-BY-NC-ND license](https://creativecommons.org/licenses/by-nc-nd/3.0/us/legalcode), and code is released under the [MIT license](https://opensource.org/licenses/MIT).
+
+If you find this content useful, please consider supporting the work by [buying the book](http://shop.oreilly.com/product/0636920034919.do)!
+"""
+
 
 def abspath_from_here(*args):
     here = os.path.dirname(__file__)
@@ -53,6 +60,7 @@ def copy_notebooks():
             cells = '1:'
             template = 'page'
             title = 'Python Data Science Handbook'
+            content.cells[2].source = INTRO_TEXT
         else:
             cells = '2:'
             template = 'booksection'
