@@ -7,7 +7,8 @@ import nbformat
 import shutil
 
 PAGEFILE = """title: {title}
-slug: {slug}
+url:
+save_as: {htmlfile}
 Template: {template}
 
 {{% notebook notebooks/{notebook_file} cells[{cells}] %}}
@@ -27,8 +28,7 @@ PAGE_DEST_DIR = abspath_from_here('content', 'pages')
 def copy_notebooks():
     nblist = sorted(nb for nb in os.listdir(NB_SOURCE_DIR)
                     if nb.endswith('.ipynb'))
-    name_map = {nb: os.path.join('/PythonDataScienceHandbook', 'pages',
-                                 nb.rsplit('.', 1)[0].lower() + '.html')
+    name_map = {nb: nb.rsplit('.', 1)[0].lower() + '.html'
                 for nb in nblist}
 
     figsource = abspath_from_here('..', 'notebooks', 'figures')
@@ -77,9 +77,10 @@ def copy_notebooks():
         nbformat.write(content, os.path.join(NB_DEST_DIR, nb))
 
         pagefile = os.path.join(PAGE_DEST_DIR, base + '.md')
+        htmlfile = base.lower() + '.html'
         with open(pagefile, 'w') as f:
             f.write(PAGEFILE.format(title=title,
-                                    slug=base.lower(),
+                                    htmlfile=htmlfile,
                                     notebook_file=nb,
                                     template=template,
                                     cells=cells))
