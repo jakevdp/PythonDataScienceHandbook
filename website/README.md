@@ -1,6 +1,9 @@
 # Tools for creating http://jakevdp.github.io/PythonDataScienceHandbook/
 
-## Building the Blog
+The website is generated using the [Pelican](http://docs.getpelican.com/) static site generator.
+The themes here are adapted from those used for my blog: https://github.com/jakevdp/jakevdp.github.io-source
+
+## Building the Website
 
 Clone the repository & make sure submodules are included
 
