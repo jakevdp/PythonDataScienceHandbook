@@ -19,6 +19,11 @@ $ source activate pelican-blog
 $ pip install pelican Markdown ghp-import
 ```
 
+Copy the notebook content to the right location (this script also modifies some links for the HTML):
+```
+$ python copy_notebooks.py
+```
+
 Build the html and serve locally:
 
 ```
