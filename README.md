@@ -1,4 +1,5 @@
 # Python Data Science Handbook
+<a href="https://notebooks.azure.com/jakevdp/libraries/PythonDataScienceHandbook"><img src="https://notebooks.azure.com/launch.png" /></a>
 
 This repository contains the entire [Python Data Science Handbook](http://shop.oreilly.com/product/0636920034919.do), in the form of (free!) Jupyter notebooks.
 
