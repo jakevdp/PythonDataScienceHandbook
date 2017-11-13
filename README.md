@@ -6,16 +6,15 @@ This repository contains the entire [Python Data Science Handbook](http://shop.o
 
 ![cover image](notebooks/figures/PDSH-cover.png)
 
-## Read the Book
+## How to Use this Book
 
-- You can read the book in its entirety online at https://jakevdp.github.io/PythonDataScienceHandbook/
+- Read the book in its entirety online at https://jakevdp.github.io/PythonDataScienceHandbook/
 
-- Jupyter notebooks containing all of the book's content are available in this repository's [notebooks](notebooks) directory.
+- Run the code using the Jupyter notebooks available in this repository's [notebooks](notebooks) directory.
 
-- To launch a live notebook server with these notebook using [binder](https://beta.mybinder.org/),
-click on the [Launch Binder](https://beta.mybinder.org/v2/gh/jakevdp/PythonDataScienceHandbook/master?filepath=notebooks%2FIndex.ipynb) badge above.
+- Launch a live notebook server with these notebook using [binder](https://beta.mybinder.org/): [![Binder](https://beta.mybinder.org/badge.svg)](https://beta.mybinder.org/v2/gh/jakevdp/PythonDataScienceHandbook/master?filepath=notebooks%2FIndex.ipynb)
 
-- You can buy the printed book through [O'Reilly Media](http://shop.oreilly.com/product/0636920034919.do)
+- Buy the printed book through [O'Reilly Media](http://shop.oreilly.com/product/0636920034919.do)
 
 ## About
 
