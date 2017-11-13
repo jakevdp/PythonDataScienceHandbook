@@ -1,6 +1,6 @@
 # Python Data Science Handbook
 
-[![Binder](https://beta.mybinder.org/badge.svg)](https://beta.mybinder.org/v2/gh/jakevdp/PythonDataScienceHandbook/master?filepath=notebooks%2FIndex.ipynb)
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/jakevdp/PythonDataScienceHandbook/master?filepath=notebooks%2FIndex.ipynb)
 
 This repository contains the entire [Python Data Science Handbook](http://shop.oreilly.com/product/0636920034919.do), in the form of (free!) Jupyter notebooks.
 
@@ -12,7 +12,7 @@ This repository contains the entire [Python Data Science Handbook](http://shop.o
 
 - Run the code using the Jupyter notebooks available in this repository's [notebooks](notebooks) directory.
 
-- Launch a live notebook server with these notebooks using [binder](https://beta.mybinder.org/): [![Binder](https://beta.mybinder.org/badge.svg)](https://beta.mybinder.org/v2/gh/jakevdp/PythonDataScienceHandbook/master?filepath=notebooks%2FIndex.ipynb)
+- Launch a live notebook server with these notebooks using [binder](https://beta.mybinder.org/): [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/jakevdp/PythonDataScienceHandbook/master?filepath=notebooks%2FIndex.ipynb)
 
 - Buy the printed book through [O'Reilly Media](http://shop.oreilly.com/product/0636920034919.do)
 
