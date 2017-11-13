@@ -1,12 +1,21 @@
 # Python Data Science Handbook
 
-This repository contains the entire [Python Data Science Handbook](http://shop.oreilly.com/product/0636920034919.do), in the form of (free!) Jupyter notebooks.
+[![Binder](https://beta.mybinder.org/badge.svg)](https://beta.mybinder.org/v2/gh/jakevdp/PythonDataScienceHandbook/master?filepath=notebooks%2FIndex.ipynb)
 
-You can read the book in its entirety online at https://jakevdp.github.io/PythonDataScienceHandbook/
+This repository contains the entire [Python Data Science Handbook](http://shop.oreilly.com/product/0636920034919.do), in the form of (free!) Jupyter notebooks.
 
 ![cover image](notebooks/figures/PDSH-cover.png)
 
-The book was written and tested with Python 3.5, though older Python versions (including Python 2.7) should work in nearly all cases.
+You can read the book in its entirety online at https://jakevdp.github.io/PythonDataScienceHandbook/
+
+Jupyter notebooks containing all of the book's content are available in this repository's [notebooks](notebooks) directory.
+
+To launch a live notebook server with these notebook using [binder](https://beta.mybinder.org/),
+click on the [Launch Binder](https://beta.mybinder.org/v2/gh/jakevdp/PythonDataScienceHandbook/master?filepath=notebooks%2FIndex.ipynb) badge above.
+
+---
+
+The book was written and tested with Python 3.5, though other Python versions (including Python 2.7) should work in nearly all cases.
 
 The book introduces the core libraries essential for working with data in Python: particularly [IPython](http://ipython.org), [NumPy](http://numpy.org), [Pandas](http://pandas.pydata.org), [Matplotlib](http://matplotlib.org), [Scikit-Learn](http://scikit-learn.org), and related packages.
 Familiarity with Python as a language is assumed; if you need a quick introduction to the language itself, see the free companion project,
