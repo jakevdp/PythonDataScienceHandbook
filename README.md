@@ -6,14 +6,18 @@ This repository contains the entire [Python Data Science Handbook](http://shop.o
 
 ![cover image](notebooks/figures/PDSH-cover.png)
 
-You can read the book in its entirety online at https://jakevdp.github.io/PythonDataScienceHandbook/
+## Read the Book
 
-Jupyter notebooks containing all of the book's content are available in this repository's [notebooks](notebooks) directory.
+- You can read the book in its entirety online at https://jakevdp.github.io/PythonDataScienceHandbook/
 
-To launch a live notebook server with these notebook using [binder](https://beta.mybinder.org/),
+- Jupyter notebooks containing all of the book's content are available in this repository's [notebooks](notebooks) directory.
+
+- To launch a live notebook server with these notebook using [binder](https://beta.mybinder.org/),
 click on the [Launch Binder](https://beta.mybinder.org/v2/gh/jakevdp/PythonDataScienceHandbook/master?filepath=notebooks%2FIndex.ipynb) badge above.
 
----
+- You can buy the printed book through [O'Reilly Media](http://shop.oreilly.com/product/0636920034919.do)
+
+## About
 
 The book was written and tested with Python 3.5, though other Python versions (including Python 2.7) should work in nearly all cases.
 
@@ -23,7 +27,7 @@ Familiarity with Python as a language is assumed; if you need a quick introducti
 
 See [Index.ipynb](http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/Index.ipynb) for an index of the notebooks available to accompany the text.
 
-## Required Packages
+## Software
 
 The code in the book was tested with Python 3.5, though most (but not all) will also work correctly with Python 2.7 and other older Python versions.
 
