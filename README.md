@@ -1,4 +1,5 @@
 # Python Data Science Handbook
+<a href="https://notebooks.azure.com/jakevdp/libraries/PythonDataScienceHandbook"><img src="https://notebooks.azure.com/launch.png" /></a>
 
 [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/jakevdp/PythonDataScienceHandbook/master?filepath=notebooks%2FIndex.ipynb)
 
