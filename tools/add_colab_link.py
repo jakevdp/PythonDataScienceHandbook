@@ -11,7 +11,7 @@ COLAB_COMMENT = "<!--COLAB_LINK-->"
 NAV_COMMENT = "<!--NAVIGATION-->\n"
 
 COLAB_LINK_TEMPLATE = COLAB_COMMENT + """
-<p><a href="https://colab.research.google.com/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/{notebook_filename}"><img src="https://colab.research.google.com/img/colab_favicon_256px.png" style="height: 2em; display: inline;"></a><i>View an executable version of this notebook in <a href="https://colab.research.google.com/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/{notebook_filename}">Google Colab</a>.</i></p>
+<p><a href="https://colab.research.google.com/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/{notebook_filename}"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open and Execute in Google Colaboratory"></a></p>
 """
 
 def write_colab_links():
