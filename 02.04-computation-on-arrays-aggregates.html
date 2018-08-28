@@ -1,0 +1,2531 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="author" content="Jake VanderPlas">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <title>Aggregations: Min, Max, and Everything In Between | Python Data Science Handbook</title>
+
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="alternate" type="application/atom+xml" title="Python Data Science Handbook blog atom feed" href="/feeds/all.atom.xml" />
+        <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="/theme/css/icons.css"/>
+        <style>.highlight .hll { background-color: #ffffcc }
+.highlight .c { color: #60a0b0; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #007020; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .cm { color: #60a0b0; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #007020 } /* Comment.Preproc */
+.highlight .c1 { color: #60a0b0; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #60a0b0; background-color: #fff0f0 } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #808080 } /* Generic.Output */
+.highlight .gp { color: #c65d09; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0040D0 } /* Generic.Traceback */
+.highlight .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #007020 } /* Keyword.Pseudo */
+.highlight .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #902000 } /* Keyword.Type */
+.highlight .m { color: #40a070 } /* Literal.Number */
+.highlight .s { color: #4070a0 } /* Literal.String */
+.highlight .na { color: #4070a0 } /* Name.Attribute */
+.highlight .nb { color: #007020 } /* Name.Builtin */
+.highlight .nc { color: #0e84b5; font-weight: bold } /* Name.Class */
+.highlight .no { color: #60add5 } /* Name.Constant */
+.highlight .nd { color: #555555; font-weight: bold } /* Name.Decorator */
+.highlight .ni { color: #d55537; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #007020 } /* Name.Exception */
+.highlight .nf { color: #06287e } /* Name.Function */
+.highlight .nl { color: #002070; font-weight: bold } /* Name.Label */
+.highlight .nn { color: #0e84b5; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #062873; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #bb60d5 } /* Name.Variable */
+.highlight .ow { color: #007020; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #40a070 } /* Literal.Number.Float */
+.highlight .mh { color: #40a070 } /* Literal.Number.Hex */
+.highlight .mi { color: #40a070 } /* Literal.Number.Integer */
+.highlight .mo { color: #40a070 } /* Literal.Number.Oct */
+.highlight .sb { color: #4070a0 } /* Literal.String.Backtick */
+.highlight .sc { color: #4070a0 } /* Literal.String.Char */
+.highlight .sd { color: #4070a0; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #4070a0 } /* Literal.String.Double */
+.highlight .se { color: #4070a0; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #4070a0 } /* Literal.String.Heredoc */
+.highlight .si { color: #70a0d0; font-style: italic } /* Literal.String.Interpol */
+.highlight .sx { color: #c65d09 } /* Literal.String.Other */
+.highlight .sr { color: #235388 } /* Literal.String.Regex */
+.highlight .s1 { color: #4070a0 } /* Literal.String.Single */
+.highlight .ss { color: #517918 } /* Literal.String.Symbol */
+.highlight .bp { color: #007020 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #bb60d5 } /* Name.Variable.Class */
+.highlight .vg { color: #bb60d5 } /* Name.Variable.Global */
+.highlight .vi { color: #bb60d5 } /* Name.Variable.Instance */
+.highlight .il { color: #40a070 } /* Literal.Number.Integer.Long */</style>
+        <style>body {
+  margin: 0;
+  padding: 0;
+  font: 15px 'Source Sans Pro', sans-serif;
+  line-height: 1.6em;
+  color: #222;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+a {
+  color: #007EE5;
+  text-decoration: none;
+}
+a:hover {
+  color: #007EE5;
+  text-decoration: none;
+}
+header.main-header {
+  background: none repeat scroll 0% 0% #205F29;
+  margin-bottom: 0px;
+}
+header.main-header a {
+  color: #fff;
+}
+header.main-header .container {
+  max-width: 1000px;
+}
+header.main-header .container nav a:hover {
+  background-color: #5C881C;
+}
+article {
+  margin: 0;
+}
+article header.about {
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+article header {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+article header h1 {
+  margin-bottom: 2px;
+  font-weight: 700;
+  color: #000;
+}
+article header time {
+  color: #9E9E9E;
+  font-size: 0.85em;
+  float: right;
+}
+article header time.left {
+  color: #9E9E9E;
+  font-size: 0.85em;
+  float: left;
+}
+article div.social-links ul {
+  padding: 0px;
+}
+article div.social-links li {
+  display: inline;
+  font-size: 20px;
+}
+article div.social-links li a {
+  color: #000;
+  padding: 10px;
+}
+article div.social-links li a:hover {
+  color: #666;
+  text-decoration: none;
+}
+article p {
+  font-size: 16px;
+  margin-bottom: 20px;
+  line-height: 1.6em;
+}
+article p.note {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 0.533em 0.733em;
+}
+article p.update {
+  background-color: #FEEFB3;
+  border: 1px solid #e6e68a;
+  padding: 0.533em 0.733em;
+}
+article p.alert {
+  background-color: #ffe2e2;
+  border: 1px solid #ffb2b2;
+  padding: 0.533em 0.733em;
+}
+article ul,
+article ol {
+  margin-top: 0px;
+  margin-bottom: 25px;
+}
+article li {
+  font-size: 16px;
+  line-height: 1.6em;
+}
+article a:hover {
+  text-decoration: underline;
+}
+article blockquote {
+  border-left: 2px solid #c7c7cc;
+  color: #666;
+  margin: 30px 0;
+  padding: 0 0 0 25px;
+}
+article img {
+  max-width: 100%;
+}
+article code {
+  color: #333;
+  background-color: #EEE;
+  border-radius: 0;
+  font-size: 13px;
+}
+article .meta {
+  font-size: 11px;
+}
+article .meta a:hover {
+  text-decoration: none;
+}
+article .meta div {
+  margin-bottom: 20px;
+  display: block;
+}
+article .meta a.tag {
+  margin: 0 10px 10px 0;
+  padding: 1px 12px;
+  display: inline-block;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.05);
+}
+article .meta a.tag:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
+article .meta a.read_more,
+article .meta a.comments_btn {
+  font-size: 14px;
+  font-weight: 800;
+  padding: 10px 20px;
+  color: #205F29;
+  background: #FFF;
+  border: 1px solid #205F29;
+}
+article .meta a.read_more:hover,
+article .meta a.comments_btn:hover {
+  color: #FFF;
+  background: #5C881C;
+}
+.index {
+  max-width: 700px;
+}
+.index article header h2 {
+  font-size: 36px;
+  margin-bottom: 2px;
+  font-weight: 700;
+}
+.index article header h2 a {
+  color: #000;
+}
+.index article header h2 a:hover {
+  color: #007EE5;
+  text-decoration: none;
+}
+.index .separator {
+  padding: 40px 0 0 0;
+  margin: 0 0 40px 0;
+  height: 10px;
+  border-bottom: solid 1px #CCC;
+}
+.index .pagination {
+  display: block;
+  margin-bottom: 100px;
+}
+.index .pagination .left {
+  text-align: right;
+}
+.index .pagination .right {
+  text-align: left;
+}
+.index .pagination a {
+  display: inline-block;
+  border: 2px solid #5C881C;
+  margin: 0 5px;
+  padding: 8px 20px;
+  font-weight: bold;
+  color: #5C881C;
+}
+.index .pagination a:hover {
+  color: #FFF;
+  background: #5C881C;
+}
+.post {
+  max-width: 700px;
+}
+.post h2:before {
+  content: "# ";
+  font-weight: bold;
+  color: #DDD;
+}
+.post h3:before {
+  content: "## ";
+  font-weight: bold;
+  color: #DDD;
+}
+.post h4:before {
+  content: "### ";
+  font-weight: bold;
+  color: #DDD;
+}
+.post article .meta {
+  margin: 50px 0 100px;
+}
+.list {
+  max-width: 700px;
+}
+.list ul.double-list {
+  margin: 0 auto 60px;
+  padding: 0;
+  list-style-type: none;
+}
+.list ul.double-list li {
+  padding: 5px 0;
+}
+.list ul.double-list li h2 {
+  font-size: 1em;
+  display: inline;
+  font-weight: normal;
+}
+.list ul.double-list li span {
+  font-family: sans-serif;
+  text-transform: uppercase;
+  text-align: right;
+  float: right;
+  padding-top: 3px;
+  font-size: 12px;
+  color: #999;
+}
+.full-width-content {
+  padding-top: 10px;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-left: -20px;
+  margin-right: -20px;
+}
+.col-xs-1,
+.col-sm-1,
+.col-md-1,
+.col-lg-1,
+.col-xs-2,
+.col-sm-2,
+.col-md-2,
+.col-lg-2,
+.col-xs-3,
+.col-sm-3,
+.col-md-3,
+.col-lg-3,
+.col-xs-4,
+.col-sm-4,
+.col-md-4,
+.col-lg-4,
+.col-xs-5,
+.col-sm-5,
+.col-md-5,
+.col-lg-5,
+.col-xs-6,
+.col-sm-6,
+.col-md-6,
+.col-lg-6,
+.col-xs-7,
+.col-sm-7,
+.col-md-7,
+.col-lg-7,
+.col-xs-8,
+.col-sm-8,
+.col-md-8,
+.col-lg-8,
+.col-xs-9,
+.col-sm-9,
+.col-md-9,
+.col-lg-9,
+.col-xs-10,
+.col-sm-10,
+.col-md-10,
+.col-lg-10,
+.col-xs-11,
+.col-sm-11,
+.col-md-11,
+.col-lg-11,
+.col-xs-12,
+.col-sm-12,
+.col-md-12,
+.col-lg-12 {
+  padding-right: 0px;
+  padding-left: 0px;
+}</style>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+        <script type="text/javascript">
+        init_mathjax = function() {
+            if (window.MathJax) {
+                // MathJax loaded
+                MathJax.Hub.Config({
+                    tex2jax: {
+                        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                        displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+                    },
+                    displayAlign: 'left', // Change this to 'center' to center equations.
+                    "HTML-CSS": {
+                        styles: {'.MathJax_Display': {"margin": 0}}
+                    }
+                });
+                MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+            }
+        }
+        init_mathjax();
+        </script>
+
+    </head>
+
+    <body>
+        <header class="navbar navbar-inverse bs-docs-nav">
+            <div class="container-fluid">
+                <div class="navbar-header">
+		  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#theNavbar">
+		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span> 
+		  </button>
+                  <a class="navbar-brand" href="/PythonDataScienceHandbook/" title="Home" class="title">Python Data Science Handbook</a>
+                </div>
+                <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation" id="theNavbar">
+		    <ul class="nav navbar-nav navbar-right">
+                            <li><a href="/pages/about.html" title="About">About</a></li>
+                            <li><a href="/archives.html" title="Archive">Archive</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <div id="wrap">
+
+<div class="container bookinfo">
+<p>
+<img align="left" style="padding-right:10px;" src="/PythonDataScienceHandbook/figures/PDSH-cover-small.png">
+<em>This is an excerpt from the <a href="http://shop.oreilly.com/product/0636920034919.do">Python Data Science Handbook</a> by Jake VanderPlas; Jupyter notebooks are available <a href="https://github.com/jakevdp/PythonDataScienceHandbook">on GitHub</a>.</em>
+</p>
+<p>
+<em>The text is released under the <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/us/legalcode">CC-BY-NC-ND license</a>, and code is released under the <a href="https://opensource.org/licenses/MIT">MIT license</a>. If you find this content useful, please consider supporting the work by <a href="http://shop.oreilly.com/product/0636920034919.do">buying the book</a>!</em>
+</p>
+</div>
+
+
+<div class="container post">
+
+    <article>
+        <header>
+            <h1>Aggregations: Min, Max, and Everything In Between</h1>
+        </header>
+
+        <div class="article_content">
+            <style type="text/css">/*!
+*
+* IPython notebook
+*
+*/
+/* CSS font colors for translated ANSI colors. */
+.ansibold {
+  font-weight: bold;
+}
+/* use dark versions for foreground, to improve visibility */
+.ansiblack {
+  color: black;
+}
+.ansired {
+  color: darkred;
+}
+.ansigreen {
+  color: darkgreen;
+}
+.ansiyellow {
+  color: #c4a000;
+}
+.ansiblue {
+  color: darkblue;
+}
+.ansipurple {
+  color: darkviolet;
+}
+.ansicyan {
+  color: steelblue;
+}
+.ansigray {
+  color: gray;
+}
+/* and light for background, for the same reason */
+.ansibgblack {
+  background-color: black;
+}
+.ansibgred {
+  background-color: red;
+}
+.ansibggreen {
+  background-color: green;
+}
+.ansibgyellow {
+  background-color: yellow;
+}
+.ansibgblue {
+  background-color: blue;
+}
+.ansibgpurple {
+  background-color: magenta;
+}
+.ansibgcyan {
+  background-color: cyan;
+}
+.ansibggray {
+  background-color: gray;
+}
+div.cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  width: 100%;
+  padding: 5px;
+  /* This acts as a spacer between cells, that is outside the border */
+  margin: 0px;
+  outline: none;
+  border-left-width: 1px;
+  padding-left: 5px;
+  background: linear-gradient(to right, transparent -40px, transparent 1px, transparent 1px, transparent 100%);
+}
+div.cell.jupyter-soft-selected {
+  border-left-color: #90CAF9;
+  border-left-color: #E3F2FD;
+  border-left-width: 1px;
+  padding-left: 5px;
+  border-right-color: #E3F2FD;
+  border-right-width: 1px;
+  background: #E3F2FD;
+}
+@media print {
+  div.cell.jupyter-soft-selected {
+    border-color: transparent;
+  }
+}
+div.cell.selected {
+  border-color: #ababab;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 5px, transparent 5px, transparent 100%);
+}
+@media print {
+  div.cell.selected {
+    border-color: transparent;
+  }
+}
+div.cell.selected.jupyter-soft-selected {
+  border-left-width: 0;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 7px, #E3F2FD 7px, #E3F2FD 100%);
+}
+.edit_mode div.cell.selected {
+  border-color: #66BB6A;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #66BB6A -40px, #66BB6A 5px, transparent 5px, transparent 100%);
+}
+@media print {
+  .edit_mode div.cell.selected {
+    border-color: transparent;
+  }
+}
+.prompt {
+  /* This needs to be wide enough for 3 digit prompt numbers: In[100]: */
+  min-width: 14ex;
+  /* This padding is tuned to match the padding on the CodeMirror editor. */
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace;
+  text-align: right;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+  /* Don't highlight prompt number selection */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Use default cursor */
+  cursor: default;
+}
+@media (max-width: 540px) {
+  .prompt {
+    text-align: left;
+  }
+}
+div.inner_cell {
+  min-width: 0;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_area {
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  background: #f7f7f7;
+  line-height: 1.21429em;
+}
+/* This is needed so that empty prompt areas can collapse to zero height when there
+   is no content in the output_subarea and the prompt. The main purpose of this is
+   to make sure that empty JavaScript output_subareas have no height. */
+div.prompt:empty {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+div.unrecognized_cell {
+  padding: 5px 5px 5px 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.unrecognized_cell .inner_cell {
+  border-radius: 2px;
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+  border: 1px solid #cfcfcf;
+  background: #eaeaea;
+}
+div.unrecognized_cell .inner_cell a {
+  color: inherit;
+  text-decoration: none;
+}
+div.unrecognized_cell .inner_cell a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+@media (max-width: 540px) {
+  div.unrecognized_cell > div.prompt {
+    display: none;
+  }
+}
+div.code_cell {
+  /* avoid page breaking on code cells when printing */
+}
+@media print {
+  div.code_cell {
+    page-break-inside: avoid;
+  }
+}
+/* any special styling for code cells that are currently running goes here */
+div.input {
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.input {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_prompt {
+  color: #303F9F;
+  border-top: 1px solid transparent;
+}
+div.input_area > div.highlight {
+  margin: 0.4em;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+div.input_area > div.highlight > pre {
+  margin: 0px;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+/* The following gets added to the <head> if it is detected that the user has a
+ * monospace font with inconsistent normal/bold/italic height.  See
+ * notebookmain.js.  Such fonts will have keywords vertically offset with
+ * respect to the rest of the text.  The user should select a better font.
+ * See: https://github.com/ipython/ipython/issues/1503
+ *
+ * .CodeMirror span {
+ *      vertical-align: bottom;
+ * }
+ */
+.CodeMirror {
+  line-height: 1.21429em;
+  /* Changed from 1em to our global default */
+  font-size: 14px;
+  height: auto;
+  /* Changed to auto to autogrow */
+  background: none;
+  /* Changed from white to allow our bg to show through */
+}
+.CodeMirror-scroll {
+  /*  The CodeMirror docs are a bit fuzzy on if overflow-y should be hidden or visible.*/
+  /*  We have found that if it is visible, vertical scrollbars appear with font size changes.*/
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+.CodeMirror-lines {
+  /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
+  /* we have set a different line-height and want this to scale with that. */
+  padding: 0.4em;
+}
+.CodeMirror-linenumber {
+  padding: 0 8px 0 4px;
+}
+.CodeMirror-gutters {
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.CodeMirror pre {
+  /* In CM3 this went to 4px from 0 in CM2. We need the 0 value because of how we size */
+  /* .CodeMirror-lines */
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+}
+/*
+
+Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
+Adapted from GitHub theme
+
+*/
+.highlight-base {
+  color: #000;
+}
+.highlight-variable {
+  color: #000;
+}
+.highlight-variable-2 {
+  color: #1a1a1a;
+}
+.highlight-variable-3 {
+  color: #333333;
+}
+.highlight-string {
+  color: #BA2121;
+}
+.highlight-comment {
+  color: #408080;
+  font-style: italic;
+}
+.highlight-number {
+  color: #080;
+}
+.highlight-atom {
+  color: #88F;
+}
+.highlight-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.highlight-builtin {
+  color: #008000;
+}
+.highlight-error {
+  color: #f00;
+}
+.highlight-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.highlight-meta {
+  color: #AA22FF;
+}
+/* previously not defined, copying from default codemirror */
+.highlight-def {
+  color: #00f;
+}
+.highlight-string-2 {
+  color: #f50;
+}
+.highlight-qualifier {
+  color: #555;
+}
+.highlight-bracket {
+  color: #997;
+}
+.highlight-tag {
+  color: #170;
+}
+.highlight-attribute {
+  color: #00c;
+}
+.highlight-header {
+  color: blue;
+}
+.highlight-quote {
+  color: #090;
+}
+.highlight-link {
+  color: #00c;
+}
+/* apply the same style to codemirror */
+.cm-s-ipython span.cm-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-atom {
+  color: #88F;
+}
+.cm-s-ipython span.cm-number {
+  color: #080;
+}
+.cm-s-ipython span.cm-def {
+  color: #00f;
+}
+.cm-s-ipython span.cm-variable {
+  color: #000;
+}
+.cm-s-ipython span.cm-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-variable-2 {
+  color: #1a1a1a;
+}
+.cm-s-ipython span.cm-variable-3 {
+  color: #333333;
+}
+.cm-s-ipython span.cm-comment {
+  color: #408080;
+  font-style: italic;
+}
+.cm-s-ipython span.cm-string {
+  color: #BA2121;
+}
+.cm-s-ipython span.cm-string-2 {
+  color: #f50;
+}
+.cm-s-ipython span.cm-meta {
+  color: #AA22FF;
+}
+.cm-s-ipython span.cm-qualifier {
+  color: #555;
+}
+.cm-s-ipython span.cm-builtin {
+  color: #008000;
+}
+.cm-s-ipython span.cm-bracket {
+  color: #997;
+}
+.cm-s-ipython span.cm-tag {
+  color: #170;
+}
+.cm-s-ipython span.cm-attribute {
+  color: #00c;
+}
+.cm-s-ipython span.cm-header {
+  color: blue;
+}
+.cm-s-ipython span.cm-quote {
+  color: #090;
+}
+.cm-s-ipython span.cm-link {
+  color: #00c;
+}
+.cm-s-ipython span.cm-error {
+  color: #f00;
+}
+.cm-s-ipython span.cm-tab {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
+  background-position: right;
+  background-repeat: no-repeat;
+}
+div.output_wrapper {
+  /* this position must be relative to enable descendents to be absolute within it */
+  position: relative;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 1;
+}
+/* class for the output area when it should be height-limited */
+div.output_scroll {
+  /* ideally, this would be max-height, but FF barfs all over that */
+  height: 24em;
+  /* FF needs this *and the wrapper* to specify full width, or it will shrinkwrap */
+  width: 100%;
+  overflow: auto;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  display: block;
+}
+/* output div while it is collapsed */
+div.output_collapsed {
+  margin: 0px;
+  padding: 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+div.out_prompt_overlay {
+  height: 100%;
+  padding: 0px 0.4em;
+  position: absolute;
+  border-radius: 2px;
+}
+div.out_prompt_overlay:hover {
+  /* use inner shadow to get border that is computed the same on WebKit/FF */
+  -webkit-box-shadow: inset 0 0 1px #000;
+  box-shadow: inset 0 0 1px #000;
+  background: rgba(240, 240, 240, 0.5);
+}
+div.output_prompt {
+  color: #D84315;
+}
+/* This class is the outer container of all output sections. */
+div.output_area {
+  padding: 0px;
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.output_area .MathJax_Display {
+  text-align: left !important;
+}
+div.output_area 
+div.output_area 
+div.output_area img,
+div.output_area svg {
+  max-width: 100%;
+  height: auto;
+}
+div.output_area img.unconfined,
+div.output_area svg.unconfined {
+  max-width: none;
+}
+/* This is needed to protect the pre formating from global settings such
+   as that of bootstrap */
+.output {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.output_area {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+div.output_area pre {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+  color: black;
+  background-color: transparent;
+  border-radius: 0;
+}
+/* This class is for the output subarea inside the output_area and after
+   the prompt div. */
+div.output_subarea {
+  overflow-x: auto;
+  padding: 0.4em;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+  max-width: calc(100% - 14ex);
+}
+div.output_scroll div.output_subarea {
+  overflow-x: visible;
+}
+/* The rest of the output_* classes are for special styling of the different
+   output types */
+/* all text output has this class: */
+div.output_text {
+  text-align: left;
+  color: #000;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+}
+/* stdout/stderr are 'text' as well as 'stream', but execute_result/error are *not* streams */
+div.output_stderr {
+  background: #fdd;
+  /* very light red background for stderr */
+}
+div.output_latex {
+  text-align: left;
+}
+/* Empty output_javascript divs should have no height */
+div.output_javascript:empty {
+  padding: 0;
+}
+.js-error {
+  color: darkred;
+}
+/* raw_input styles */
+div.raw_input_container {
+  line-height: 1.21429em;
+  padding-top: 5px;
+}
+pre.raw_input_prompt {
+  /* nothing needed here. */
+}
+input.raw_input {
+  font-family: monospace;
+  font-size: inherit;
+  color: inherit;
+  width: auto;
+  /* make sure input baseline aligns with prompt */
+  vertical-align: baseline;
+  /* padding + margin = 0.5em between prompt and cursor */
+  padding: 0em 0.25em;
+  margin: 0em 0.25em;
+}
+input.raw_input:focus {
+  box-shadow: none;
+}
+p.p-space {
+  margin-bottom: 10px;
+}
+div.output_unrecognized {
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+}
+div.output_unrecognized a {
+  color: inherit;
+  text-decoration: none;
+}
+div.output_unrecognized a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+.rendered_html {
+  color: #000;
+  /* any extras will just be numbers: */
+}
+
+
+
+.rendered_html :link {
+  text-decoration: underline;
+}
+.rendered_html :visited {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+.rendered_html h1:first-child {
+  margin-top: 0.538em;
+}
+.rendered_html h2:first-child {
+  margin-top: 0.636em;
+}
+.rendered_html h3:first-child {
+  margin-top: 0.777em;
+}
+.rendered_html h4:first-child {
+  margin-top: 1em;
+}
+.rendered_html h5:first-child {
+  margin-top: 1em;
+}
+.rendered_html h6:first-child {
+  margin-top: 1em;
+}
+
+
+
+
+
+
+
+
+.rendered_html * + ul {
+  margin-top: 1em;
+}
+.rendered_html * + ol {
+  margin-top: 1em;
+}
+
+
+.rendered_html pre,
+
+
+
+.rendered_html tr,
+.rendered_html th,
+
+.rendered_html td,
+
+
+.rendered_html * + table {
+  margin-top: 1em;
+}
+
+.rendered_html * + p {
+  margin-top: 1em;
+}
+
+.rendered_html * + img {
+  margin-top: 1em;
+}
+.rendered_html img,
+
+.rendered_html img.unconfined,
+
+div.text_cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.text_cell > div.prompt {
+    display: none;
+  }
+}
+div.text_cell_render {
+  /*font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;*/
+  outline: none;
+  resize: none;
+  width: inherit;
+  border-style: none;
+  padding: 0.5em 0.5em 0.5em 0.4em;
+  color: #000;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+a.anchor-link:link {
+  text-decoration: none;
+  padding: 0px 20px;
+  visibility: hidden;
+}
+h1:hover .anchor-link,
+h2:hover .anchor-link,
+h3:hover .anchor-link,
+h4:hover .anchor-link,
+h5:hover .anchor-link,
+h6:hover .anchor-link {
+  visibility: visible;
+}
+.text_cell.rendered .input_area {
+  display: none;
+}
+.text_cell.rendered 
+.text_cell.unrendered .text_cell_render {
+  display: none;
+}
+.cm-header-1,
+.cm-header-2,
+.cm-header-3,
+.cm-header-4,
+.cm-header-5,
+.cm-header-6 {
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.cm-header-1 {
+  font-size: 185.7%;
+}
+.cm-header-2 {
+  font-size: 157.1%;
+}
+.cm-header-3 {
+  font-size: 128.6%;
+}
+.cm-header-4 {
+  font-size: 110%;
+}
+.cm-header-5 {
+  font-size: 100%;
+  font-style: italic;
+}
+.cm-header-6 {
+  font-size: 100%;
+  font-style: italic;
+}
+</style>
+<style type="text/css">.highlight .hll { background-color: #ffffcc }
+.highlight  { background: #f8f8f8; }
+.highlight .c { color: #408080; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #7D9029 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #A0A000 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+<style type="text/css">
+/* Temporary definitions which will become obsolete with Notebook release 5.0 */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+</style>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><!--NAVIGATION-->
+&lt; <a href="02.03-computation-on-arrays-ufuncs.html">Computation on NumPy Arrays: Universal Functions</a> | <a href="index.html">Contents</a> | <a href="02.05-computation-on-arrays-broadcasting.html">Computation on Arrays: Broadcasting</a> &gt;</p>
+<p><a href="https://colab.research.google.com/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/02.04-Computation-on-arrays-aggregates.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open and Execute in Google Colaboratory"></a></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Often when faced with a large amount of data, a first step is to compute summary statistics for the data in question.
+Perhaps the most common summary statistics are the mean and standard deviation, which allow you to summarize the "typical" values in a dataset, but other aggregates are useful as well (the sum, product, median, minimum and maximum, quantiles, etc.).</p>
+<p>NumPy has fast built-in aggregation functions for working on arrays; we'll discuss and demonstrate some of them here.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Summing-the-Values-in-an-Array">Summing the Values in an Array<a class="anchor-link" href="#Summing-the-Values-in-an-Array">&#182;</a></h2><p>As a quick example, consider computing the sum of all values in an array.
+Python itself can do this using the built-in <code>sum</code> function:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="nb">sum</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[2]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>55.61209116604941</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The syntax is quite similar to that of NumPy's <code>sum</code> function, and the result is the same in the simplest case:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[3]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>55.612091166049424</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>However, because it executes the operation in compiled code, NumPy's version of the operation is computed much more quickly:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">big_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> sum(big_array)
+<span class="o">%</span><span class="k">timeit</span> np.sum(big_array)
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>10 loops, best of 3: 104 ms per loop
+1000 loops, best of 3: 442 µs per loop
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Be careful, though: the <code>sum</code> function and the <code>np.sum</code> function are not identical, which can sometimes lead to confusion!
+In particular, their optional arguments have different meanings, and <code>np.sum</code> is aware of multiple array dimensions, as we will see in the following section.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Minimum-and-Maximum">Minimum and Maximum<a class="anchor-link" href="#Minimum-and-Maximum">&#182;</a></h2><p>Similarly, Python has built-in <code>min</code> and <code>max</code> functions, used to find the minimum value and maximum value of any given array:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">min</span><span class="p">(</span><span class="n">big_array</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">big_array</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[5]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(1.1717128136634614e-06, 0.9999976784968716)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>NumPy's corresponding functions have similar syntax, and again operate much more quickly:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">big_array</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">big_array</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[6]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(1.1717128136634614e-06, 0.9999976784968716)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">timeit</span> min(big_array)
+<span class="o">%</span><span class="k">timeit</span> np.min(big_array)
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>10 loops, best of 3: 82.3 ms per loop
+1000 loops, best of 3: 497 µs per loop
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For <code>min</code>, <code>max</code>, <code>sum</code>, and several other NumPy aggregates, a shorter syntax is to use methods of the array object itself:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">big_array</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">big_array</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">big_array</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>1.17171281366e-06 0.999997678497 499911.628197
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Whenever possible, make sure that you are using the NumPy version of these aggregates when operating on NumPy arrays!</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Multi-dimensional-aggregates">Multi dimensional aggregates<a class="anchor-link" href="#Multi-dimensional-aggregates">&#182;</a></h3><p>One common type of aggregation operation is an aggregate along a row or column.
+Say you have some data stored in a two-dimensional array:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[[ 0.8967576   0.03783739  0.75952519  0.06682827]
+ [ 0.8354065   0.99196818  0.19544769  0.43447084]
+ [ 0.66859307  0.15038721  0.37911423  0.6687194 ]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>By default, each NumPy aggregation function will return the aggregate over the entire array:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">M</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[10]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>6.0850555667307118</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Aggregation functions take an additional argument specifying the <em>axis</em> along which the aggregate is computed. For example, we can find the minimum value within each column by specifying <code>axis=0</code>:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">M</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[11]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([ 0.66859307,  0.03783739,  0.19544769,  0.06682827])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The function returns four values, corresponding to the four columns of numbers.</p>
+<p>Similarly, we can find the maximum value within each row:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">M</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[12]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([ 0.8967576 ,  0.99196818,  0.6687194 ])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The way the axis is specified here can be confusing to users coming from other languages.
+The <code>axis</code> keyword specifies the <em>dimension of the array that will be collapsed</em>, rather than the dimension that will be returned.
+So specifying <code>axis=0</code> means that the first axis will be collapsed: for two-dimensional arrays, this means that values within each column will be aggregated.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Other-aggregation-functions">Other aggregation functions<a class="anchor-link" href="#Other-aggregation-functions">&#182;</a></h3><p>NumPy provides many other aggregation functions, but we won't discuss them in detail here.
+Additionally, most aggregates have a <code>NaN</code>-safe counterpart that computes the result while ignoring missing values, which are marked by the special IEEE floating-point <code>NaN</code> value (for a fuller discussion of missing data, see <a href="03.04-missing-values.html">Handling Missing Data</a>).
+Some of these <code>NaN</code>-safe functions were not added until NumPy 1.8, so they will not be available in older NumPy versions.</p>
+<p>The following table provides a list of useful aggregation functions available in NumPy:</p>
+<table>
+<thead><tr>
+<th>Function Name</th>
+<th>NaN-safe Version</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>np.sum</code></td>
+<td><code>np.nansum</code></td>
+<td>Compute sum of elements</td>
+</tr>
+<tr>
+<td><code>np.prod</code></td>
+<td><code>np.nanprod</code></td>
+<td>Compute product of elements</td>
+</tr>
+<tr>
+<td><code>np.mean</code></td>
+<td><code>np.nanmean</code></td>
+<td>Compute mean of elements</td>
+</tr>
+<tr>
+<td><code>np.std</code></td>
+<td><code>np.nanstd</code></td>
+<td>Compute standard deviation</td>
+</tr>
+<tr>
+<td><code>np.var</code></td>
+<td><code>np.nanvar</code></td>
+<td>Compute variance</td>
+</tr>
+<tr>
+<td><code>np.min</code></td>
+<td><code>np.nanmin</code></td>
+<td>Find minimum value</td>
+</tr>
+<tr>
+<td><code>np.max</code></td>
+<td><code>np.nanmax</code></td>
+<td>Find maximum value</td>
+</tr>
+<tr>
+<td><code>np.argmin</code></td>
+<td><code>np.nanargmin</code></td>
+<td>Find index of minimum value</td>
+</tr>
+<tr>
+<td><code>np.argmax</code></td>
+<td><code>np.nanargmax</code></td>
+<td>Find index of maximum value</td>
+</tr>
+<tr>
+<td><code>np.median</code></td>
+<td><code>np.nanmedian</code></td>
+<td>Compute median of elements</td>
+</tr>
+<tr>
+<td><code>np.percentile</code></td>
+<td><code>np.nanpercentile</code></td>
+<td>Compute rank-based statistics of elements</td>
+</tr>
+<tr>
+<td><code>np.any</code></td>
+<td>N/A</td>
+<td>Evaluate whether any elements are true</td>
+</tr>
+<tr>
+<td><code>np.all</code></td>
+<td>N/A</td>
+<td>Evaluate whether all elements are true</td>
+</tr>
+</tbody>
+</table>
+<p>We will see these aggregates often throughout the rest of the book.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Example:-What-is-the-Average-Height-of-US-Presidents?">Example: What is the Average Height of US Presidents?<a class="anchor-link" href="#Example:-What-is-the-Average-Height-of-US-Presidents?">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Aggregates available in NumPy can be extremely useful for summarizing a set of values.
+As a simple example, let's consider the heights of all US presidents.
+This data is available in the file <em>president_heights.csv</em>, which is a simple comma-separated list of labels and values:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>head -4 data/president_heights.csv
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>order,name,height(cm)
+1,George Washington,189
+2,John Adams,170
+3,Thomas Jefferson,189
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We'll use the Pandas package, which we'll explore more fully in <a href="03.00-introduction-to-pandas.html">Chapter 3</a>, to read the file and extract this information (note that the heights are measured in centimeters).</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/president_heights.csv&#39;</span><span class="p">)</span>
+<span class="n">heights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;height(cm)&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">heights</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[189 170 189 163 183 171 185 168 173 183 173 173 175 178 183 193 178 173
+ 174 183 183 168 170 178 182 180 183 178 182 188 175 179 183 193 182 183
+ 177 185 188 188 182 185]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that we have this data array, we can compute a variety of summary statistics:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean height:       &quot;</span><span class="p">,</span> <span class="n">heights</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Standard deviation:&quot;</span><span class="p">,</span> <span class="n">heights</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Minimum height:    &quot;</span><span class="p">,</span> <span class="n">heights</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maximum height:    &quot;</span><span class="p">,</span> <span class="n">heights</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Mean height:        179.738095238
+Standard deviation: 6.93184344275
+Minimum height:     163
+Maximum height:     193
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note that in each case, the aggregation operation reduced the entire array to a single summarizing value, which gives us information about the distribution of values.
+We may also wish to compute quantiles:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;25th percentile:   &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">heights</span><span class="p">,</span> <span class="mi">25</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Median:            &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">heights</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;75th percentile:   &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">heights</span><span class="p">,</span> <span class="mi">75</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>25th percentile:    174.25
+Median:             182.0
+75th percentile:    183.0
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We see that the median height of US presidents is 182 cm, or just shy of six feet.</p>
+<p>Of course, sometimes it's more useful to see a visual representation of this data, which we can accomplish using tools in Matplotlib (we'll discuss Matplotlib more fully in <a href="04.00-introduction-to-matplotlib.html">Chapter 4</a>). For example, this code generates the following chart:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span><span class="p">;</span> <span class="n">seaborn</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>  <span class="c1"># set plot style</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">heights</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Height Distribution of US Presidents&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;height (cm)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;number&#39;</span><span class="p">);</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfYAAAFtCAYAAAD1Skg8AAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
+AAALEgAACxIB0t1+/AAAIABJREFUeJzt3Xl8VNXdx/HvJJNEskAWEyzIJiWgqLwKFFHBIsrrCRZq
+ArUImIBaqUKEVqgIRJBSjMCTUkCwRNyIYKxABCyCLxTxAZTNumBBVLayBxJCEsAsc58/eDGSlZkk
+MxNOPu+/Mss953fuuck3d5k7NsuyLAEAACP4+boAAABQdwh2AAAMQrADAGAQgh0AAIMQ7AAAGIRg
+BwDAIAQ76r0OHTrozJkzZZ7LysrS448/fsVl//CHP+iHH36o9j0TJkzQa6+9Vulr8+fP10cffVTh
++SNHjuimm25SQkKCEhIS9Jvf/EYDBw7Uu+++63zP3LlztXLlymr7rqr98stXtg6u5Ouvv9aUKVMk
+Sbt27dKYMWPcWr4mHA6HnnjiCcXFxWnJkiVlXqtqzh5//HHneissLNSzzz6r/v376/7779eAAQP0
+zjvvVNpXVlaWunbtqoSEBA0YMEDx8fEaMmSIvvjiizobT1Xbz7p165SYmFirth999FG35xRwhd3X
+BQBXYrPZarzswoULa9X3Z599pnbt2lX62jXXXKOsrCzn46NHj2r48OEKCQlRnz59NHr06Fq1f/ny
+NVkH3333nU6cOCFJuvnmmzVnzhy323DX8ePHtWXLFn3xxRc1qjktLU0hISFavXq1JCk7O1uDBg1S
+8+bNdccdd1R4f9euXfWPf/zD+XjDhg1KTk7WJ598Ij+/2u+3VLf91Ga7lKTNmzfXanmgKgQ76r0r
+3UOpuLhY//u//6vt27fL4XDoxhtvVEpKikJCQtS7d2/NmzdPHTt2VHp6upYvX66QkBB17dpV69ev
+d+4tf/7551q3bp1Onz6t2NhYpaWlafny5dq1a5dmzpwpPz8/3XvvvdXW0axZM40ePVqvvPKK+vTp
+owkTJig2NlYPP/yw5s6dqw8//FABAQEKDw9XamqqPvjggzLtf/jhhzpz5owOHz6sXr166dSpU87l
+LcvS3/72N+3atUuWZWnMmDHq1auXsrKytG7dOme4XXr83HPPad68eSooKNDEiRMVHx+vadOmafXq
+1SooKNDUqVO1Z88e2Ww29ezZU2PHjpWfn59uvfVWjRgxQps3b1Z2drYSExM1bNiwCmPdsWOHZs2a
+pQsXLiggIEBjxoxR586d9dhjj6mkpEQDBgzQ3Llz1aJFC7fmOjs7W9dee62Ki4sVEBCg6OhozZs3
+T02aNHFp+dtvv12nT5/W2bNnNWPGjDLrc/To0VVuJ0uXLtXbb7+twMBABQUFaerUqWrbtm2Z7WfO
+nDl67733FBERoZYtWzr7vNL2N2DAAH366ac6duyY7rvvPo0bN04TJkyQJCUlJenll1/Whx9+WGn/
+QE1wKB5XhaSkJOdh7/j4eM2dO9f5Wnp6uux2u1asWKF3331XMTExSktLK7P8pk2b9O6772r58uVa
+sWKFCgsLy+xxnTx5UosXL9a6det07NgxffDBBxo6dKhuvvlmPf3001cM9Us6dOigb7/9tsxzx48f
+1+LFi7Vs2TItW7ZMPXr00FdffeVsf/z48c72f/zxR61evVpjx46t0HarVq20YsUKzZw5U+PHj1du
+bm6VdVx33XUaPXq0unTpoueff77Ma9OmTVNERIRWr16t5cuXa8+ePXrllVckSUVFRYqMjNRbb72l
+OXPmKC0tTUVFRWWWP3PmjMaMGaOUlBStXLlSL7zwgv785z/rzJkzSk9PV1BQkLKystwOdUlKTk7W
+li1bdPvtt+v3v/+9FixYoJCQEF1//fUuLZ+Zmal27dopPDxcUtn1WdV24nA4lJqaqldeeUXvvPOO
+fve73+nzzz8v0+6HH36o9evXa9WqVcrMzFRBQYHztSttf+fOndOSJUv01ltvKSMjQ0eOHFFqaqok
+KSMjQ9HR0VfsH3AHe+y4KmRkZJTZa7u0ZypJH3/8sfLz852HNktKShQVFVVm+Y0bNyouLk6hoaGS
+pKFDh+qzzz5zvn7PPfcoMDBQkhQbG6ucnJwa1Wmz2dSoUaMyzzVt2lQ33nijEhIS1LNnT9111126
+/fbbna9ffkSic+fOVbb94IMPSpLatWundu3a1fhc8v/93/8pMzNTkhQQEKDBgwfrjTfe0GOPPSbp
+4rqQpI4dO6q4uFjnz593rhtJ+vLLL9WqVSvdcsstkqSf//zn6ty5s7Zt26Zu3bpV2W9Vh64dDofz
+sHn79u21bt06/ec//9G2bdu0efNmLVy4UHPmzFGvXr0qLLtjxw4lJCRIurjnfMMNN2jevHnO1y9f
+n1VtJ35+furbt68GDRqkXr166c4771T//v3L9PPpp5+qT58+zrkdOHCgMjIyqm33kkvrs2nTpoqK
+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
+8GXJdery8T/11FNKSkpSYmKievfurbFjx0oyd/5dGftf//rXBjH3u3fv1qBBgzR06FBNmjTJ+R5T
+515ybfwN5Xf/m2++0QMPPKCHHnpIf/3rX53vaSjzX9X43Z5/qx54+eWXrX79+lmDBg2yLMuynnnm
+Gev999+3LMuyPvvsM+vjjz+2srOzrX79+lnFxcVWfn6+1a9fP6uoqMiXZdcZV8ZvWZY1ePBgKzc3
+12d1ekr58V+Sl5dnxcfHW6dOnTJ2/l0Zu2U1nLkfNWqU9cknn1iWZVljx461NmzYYOzcW5Zr47es
+hjP/AwYMsL744gvLsixr9uzZ1qpVqxrU/Fc2fstyf/7rxR57q1atNH/+fOfjzz//XMePH9fDDz+s
+9957T7fddpu++uordenSRXa7XaGhoWrdurXzI3NXO1fGb1mWDh48qMmTJ2vw4MFavny5DyuuW+XH
+f8ncuXP10EMPKSoqytj5d2XsDWnub7zxRuXm5sqyLBUWFsputxs795Jr429I83/ixAl16tRJ0sV7
+nuzYsaNBzX/58e/cubNG818vgr1Pnz7y9/d3Pj5y5IjCw8P12muv6brrrlN6enqFW9EGBwcrPz/f
+F+XWOVfGf+7cOSUmJmrWrFlatGiRli5dqr179/qw6rpTfvzSxdMRW7du1YABAyRVvBWxKfPvytgb
+0ty3bt1a06dP169//Wvl5OSoW7duxs695Nr4G9L8t2jRQjt27JAkbdiwQRcuXGhQ819+/OfPn9f5
+8+fdnv96EezlhYeH6+6775Yk9e7dW7t27VJYWFiZ8wqFhYVq3Lixr0r0qPLj/+abbxQcHKzExEQF
+BQUpJCRE3bt31549e3xcqeesXbtW/fr1k8128X7RoaGhDWb+y4+9UaNGDWbup0+frqVLl2rNmjX6
+zW9+oxdeeKFB/e5XNv6G9Lv//PPP6x//+IcefvhhRUVFKSIiokHNf2Xjr8nvf70M9i5dujhvO7t9
++3a1a9dOt9xyi3bu3KmioiLl5+dr3759ateunY8r9Yzy4//5z3+uffv2afDgwbIsS8XFxdq5c6c6
+duzo40rrlnXZvZI+/fRT3XXXXc7Ht956q9HzX93Y9+/fb/zcXxIeHq7Q0FBJUtOmTXX27NkG9btf
+2fgbwu/+JRs3blRaWppee+01nTlzRnfccUeDmv/Kxl+T+a9/XwMmafz48UpJSdFbb72lsLAwpaWl
+KSwszHmVuGVZeuqppxQYGOjrUj2iqvHHx8frgQceUEBAgBISEtS2bVtfl1qnLu2hStKBAwfUokUL
+5+Nrr72o4tndAAAEk0lEQVTW6Pmvbuxt27Y1fu4vmTZtmv74xz/KbrcrMDBQ06ZNM37uL1fZ+Js1
+a9Zg5r9Vq1YaNmyYGjVqpNtuu835D25Dmf+qxu/u/HNLWQAADFIvD8UDAICaIdgBADAIwQ4AgEEI
+dgAADEKwAwBgEIIdAACDEOzAVWTbtm3Ob4JyVUJCQrWvZ2VlacKECRWeLygo0KhRo6pc7plnnlF2
+drZbtZQ3Y8YM7d69u1ZtACiLYAeuMpffzMYVWVlZNernzJkzVd668uOPP1bTpk0VHR1do7YvGTFi
+hJ5//vlatQGgLIIduMrk5ORoxIgRiouL08iRI1VcXCxJevfddzVgwAAlJCQoJSVFRUVFkqQOHTpI
+urgHPnLkSPXv31+PP/64EhISdPToUUnSwYMHlZiYqHvvvVeTJ0+WdPG+5SdPntSTTz5ZoYZFixYp
+Pj5ekpSXl6fk5GTdd999SkhI0NatWyVJPXr00LPPPqu+ffsqKSlJa9eu1dChQ3Xvvfc6v+giIiJC
+kZGR2rZtmwfXGNCwEOzAVebYsWN67rnntHbtWmVnZ2vLli36/vvv9c477ygzM1NZWVmKjIzUq6++
+KumnPfwXX3xRN9xwg1avXq3k5OQy3xB1/PhxLViwQGvWrNHGjRv1ww8/KCUlRTExMZo3b16Z/vPy
+8nTgwAG1adNGkjRnzhy1atVKa9as0YwZMzR79mxJ0qlTp9S7d2+9//77kqT169dryZIlSk5O1htv
+vOFsr2vXrvroo488t8KABqZe3iseQNU6dOigZs2aSbp4H/nc3FwdPnxYBw8e1KBBg2RZlkpKSip8
+UcSWLVuUlpYmSbr55pvVvn1752tdu3Z1fjVmy5YtlZubq5/97GeV9n/o0CHFxMQ4H2/fvt3Zbmxs
+rDIzMyVd/IeiZ8+ekqTmzZurS5cukqRmzZopLy/PuXyzZs20efPmmq8QAGUQ7MBV5vLvb760N15a
+Wqq+fftq0qRJkqTz58+rtLS0wnIOh8P5+PKviSj/nfDVfYWEn5+f7Paf/nRc/rMk7du3z7k3X937
+Ln/ez4+Dh0Bd4bcJMEC3bt20fv165eTkyLIsTZkyRa+//rqkn0L6jjvu0HvvvSdJ+vbbb/Xdd99V
+eyGe3W6v8M+BJF1//fU6fvy48/Evf/lL/etf/5Ik/fDDD3rsscdks9mq/efgcocPH1arVq1cei+A
+KyPYAQN06NBBo0aN0rBhw9S/f39ZlqURI0ZI+mmv/oknntDBgwd1//3368UXX1R0dLSCgoIqtHXp
+/VFRUbruuus0bNiwMq83adJELVu21A8//CBJevLJJ3XgwAHdf//9evrppzVr1qwy7VzJ1q1bdc89
+99Rs4AAq4GtbgQZi1apVatGihX7xi1/o2LFjSkxM1Pr162vU1oYNG7Rt2zaNHz++VjWdPn1ao0eP
+1pIlS2rVDoCfcI4daCBuuOEGTZkyRQ6HQ/7+/po2bVqN27r77ru1Zs0aZWdn1+qz7Onp6Zo4cWKN
+lwdQEXvsAAAYhHPsAAAYhGAHAMAgBDsAAAYh2AEAMAjBDgCAQQh2AAAM8v/gmhQSmQZxLgAAAABJ
+RU5ErkJggg==
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>These aggregates are some of the fundamental pieces of exploratory data analysis that we'll explore in more depth in later chapters of the book.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><!--NAVIGATION-->
+&lt; <a href="02.03-computation-on-arrays-ufuncs.html">Computation on NumPy Arrays: Universal Functions</a> | <a href="index.html">Contents</a> | <a href="02.05-computation-on-arrays-broadcasting.html">Computation on Arrays: Broadcasting</a> &gt;</p>
+<p><a href="https://colab.research.google.com/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/02.04-Computation-on-arrays-aggregates.ipynb"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open and Execute in Google Colaboratory"></a></p>
+
+</div>
+</div>
+</div>
+ 
+
+
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: 'center'," +
+        "    displayIndent: '0em'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['$','$'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        " linebreaks: { automatic: true, width: '95% container' }, " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+        "    } " +
+        "}); ";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+        </div>
+
+    </article>
+</div>
+        </div>
+<!--
+    <footer>
+      <p>
+        © 2012-2017 Jake VanderPlas, license <a href="https://github.com/jakevdp/jakevdp.github.io-source/blob/master/LICENSE"> </a>
+        unless otherwise noted.
+        Generated by <a href= "http://docs.getpelican.com/">Pelican</a>.
+      </p>
+    </footer>
+-->
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-34061646-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-34061646-1');
+    ga('send', 'pageview');
+</script>
+    </body>
+</html>
