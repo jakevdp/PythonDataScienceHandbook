@@ -1,10 +1,9 @@
-
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.tree import DecisionTreeClassifier
-from ipywidgets import interact
+""" IMPORT THE LIBRARIES REQUIRED """
+import numpy as np import matplotlib.pyplot as plt from sklearn.tree 
+import DecisionTreeClassifier from ipywidgets import interact
 
 
+""" FUNCTION TO PLOT THE GRAPHS """
 def visualize_tree(estimator, X, y, boundaries=True,
                    xlim=None, ylim=None, ax=None):
     ax = ax or plt.gca()
