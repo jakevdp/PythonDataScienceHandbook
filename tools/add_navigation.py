@@ -19,6 +19,11 @@ CONTENTS = "| [Contents](Index.ipynb) |"
 NEXT_TEMPLATE = " [{title}]({url}) >"
 NAV_COMMENT = "<!--NAVIGATION-->\n"
 
+COLAB_LINK = """
+
+<a href="https://colab.research.google.com/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/{notebook_filename}"><img align="left" src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" title="Open and Execute in Google Colaboratory"></a>
+"""
+
 
 def iter_navbars():
     for prev_nb, nb, next_nb in prev_this_next(iter_notebooks()):
@@ -30,6 +35,9 @@ def iter_navbars():
         if next_nb:
             navbar += NEXT_TEMPLATE.format(title=get_notebook_title(next_nb),
                                            url=next_nb)
+
+        navbar += COLAB_LINK.format(notebook_filename=os.path.basename(nb))
+            
         yield os.path.join(NOTEBOOK_DIR, nb), navbar
 
 
