@@ -19,6 +19,8 @@ This repository contains the entire [Python Data Science Handbook](http://shop.o
 
 - Buy the printed book through [O'Reilly Media](http://shop.oreilly.com/product/0636920034919.do)
 
+- [Simplified Chinese Version（简体中文版）《Python数据科学手册》由图灵社区2018-01-30出版](http://www.ituring.com.cn/book/1937)
+
 ## About
 
 The book was written and tested with Python 3.5, though other Python versions (including Python 2.7) should work in nearly all cases.
