@@ -30,7 +30,7 @@ def visualize_tree(estimator, X, y, boundaries=True,
     Z = Z.reshape(xx.shape)
     contours = ax.contourf(xx, yy, Z, alpha=0.3,
                            levels=np.arange(n_classes + 1) - 0.5,
-                           cmap='viridis', clim=(y.min(), y.max()),
+                           cmap='viridis',
                            zorder=1)
 
     ax.set(xlim=xlim, ylim=ylim)
