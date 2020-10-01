@@ -1,7 +1,7 @@
-from fabric.api import *
+from fabric.api import * # This statement imports fabric.api
 import fabric.contrib.project as project
-import os
-import shutil
+import os # This statement imports os
+import shutil # This statement imports shutil
 import sys
 import SocketServer
 
