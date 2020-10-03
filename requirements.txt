@@ -13,3 +13,4 @@ memory_profiler
 numexpr
 pandas-datareader
 netcdf4
+Tool :-Kibana , Elastic Search 
