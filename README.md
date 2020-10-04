@@ -46,6 +46,14 @@ To create a stand-alone environment named ``PDSH`` with Python 3.5 and all the r
 $ conda create -n PDSH python=3.5 --file requirements.txt
 ```
 
+if you use pip : 
+```
+$ pip install -file requirements.txt
+```
+documentation of pip:
+(https://pip.pypa.io/en/stable/installing/)
+
+
 You can read more about using conda environments in the [Managing Environments](http://conda.pydata.org/docs/using/envs.html) section of the conda documentation.
 
 
