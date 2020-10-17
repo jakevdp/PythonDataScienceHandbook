@@ -21,9 +21,9 @@ This repository contains the entire [Python Data Science Handbook](http://shop.o
 
 ## About
 
-The book was written and tested with Python 3.5, though other Python versions (including Python 2.7) should work in nearly all cases.
+The book was written and tested with Python 3, though other Python versions (including Python 2) should work in ALMOST all cases.
 
-The book introduces the core libraries essential for working with data in Python: particularly [IPython](http://ipython.org), [NumPy](http://numpy.org), [Pandas](http://pandas.pydata.org), [Matplotlib](http://matplotlib.org), [Scikit-Learn](http://scikit-learn.org), and related packages.
+The book introduces the core libraries such as numpy,sklearn etc ,essential for working with data in Python: particularly [IPython](http://ipython.org), [NumPy](http://numpy.org), [Pandas](http://pandas.pydata.org), [Matplotlib](http://matplotlib.org), [Scikit-Learn](http://scikit-learn.org), and related packages.
 Familiarity with Python as a language is assumed; if you need a quick introduction to the language itself, see the free companion project,
 [A Whirlwind Tour of Python](https://github.com/jakevdp/WhirlwindTourOfPython): it's a fast-paced introduction to the Python language aimed at researchers and scientists.
 
