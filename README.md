@@ -18,6 +18,8 @@ This repository contains the entire [Python Data Science Handbook](http://shop.o
 
 - Launch a live notebook server with these notebooks using [binder](https://beta.mybinder.org/): [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/jakevdp/PythonDataScienceHandbook/master?filepath=notebooks%2FIndex.ipynb)
 
+- Launch executable versions of these notebooks using [Deepnote](https://www.deepnote.com/): [![Deepnote](https://deepnote.com/buttons/launch-in-deepnote.svg)](https://www.deepnote.com/launch?template=data-science&url=https://github.com/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/Index.ipynb)
+
 - Buy the printed book through [O'Reilly Media](http://shop.oreilly.com/product/0636920034919.do)
 
 ## About
