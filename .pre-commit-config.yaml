@@ -1,0 +1,15 @@
+# Install the pre-commit hooks below with
+# 'pre-commit install'
+
+# Auto-update the version of the hooks with
+# 'pre-commit autoupdate'
+
+# Run the hooks on all files with
+# 'pre-commit run --all'
+
+repos:
+- repo: https://github.com/mwouts/jupytext
+  rev: v1.10.0
+  hooks:
+  - id: jupytext
+    args: [--sync]
