@@ -3,7 +3,7 @@
 [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/jakevdp/PythonDataScienceHandbook/master?filepath=notebooks%2FIndex.ipynb)
 [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/Index.ipynb)
 
-This repository entirely contains a free [Python Data Science Handbook](http://shop.oreilly.com/product/0636920034919.do) in the form of Jupyter notebooks.
+This repository entirely contains a free [Python Data Science Handbook](http://shop.oreilly.com/product/0636920034919.do)  in the form of Jupyter notebooks.
 
 ![cover image](notebooks/figures/PDSH-cover.png)
 
