@@ -6,7 +6,7 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.10.3
+      jupytext_version: 1.13.0
   kernelspec:
     display_name: Python 3
     language: python
