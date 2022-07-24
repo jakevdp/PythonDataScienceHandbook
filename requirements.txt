@@ -12,4 +12,4 @@ line_profiler
 memory_profiler
 numexpr
 pandas-datareader
-netcdf4
+netcdf4,
