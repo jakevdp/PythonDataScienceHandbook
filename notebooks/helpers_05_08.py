@@ -1,6 +1,6 @@
 
 import numpy as np
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt; plt.rcParams['figure.dpi'] = 600
 from sklearn.tree import DecisionTreeClassifier
 from ipywidgets import interact
 
@@ -30,8 +30,7 @@ def visualize_tree(estimator, X, y, boundaries=True,
     Z = Z.reshape(xx.shape)
     contours = ax.contourf(xx, yy, Z, alpha=0.3,
                            levels=np.arange(n_classes + 1) - 0.5,
-                           cmap='viridis', clim=(y.min(), y.max()),
-                           zorder=1)
+                           cmap='viridis', zorder=1)
 
     ax.set(xlim=xlim, ylim=ylim)
     
@@ -63,7 +62,7 @@ def plot_tree_interactive(X, y):
         clf = DecisionTreeClassifier(max_depth=depth, random_state=0)
         visualize_tree(clf, X, y)
 
-    return interact(interactive_tree, depth=[1, 5])
+    return interact(interactive_tree, depth=(1, 5))
 
 
 def randomized_tree_interactive(X, y):
@@ -80,4 +79,4 @@ def randomized_tree_interactive(X, y):
         visualize_tree(clf, X[i[:N]], y[i[:N]], boundaries=False,
                        xlim=xlim, ylim=ylim)
     
-    interact(fit_randomized_tree, random_state=[0, 100]);
+    interact(fit_randomized_tree, random_state=(0, 100));
