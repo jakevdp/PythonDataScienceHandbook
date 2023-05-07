@@ -28,10 +28,7 @@ def get_notebook_title(nb_file):
 
 def gen_contents(directory=None):
     for nb in iter_notebooks():
-        if directory:
-            nb_url = os.path.join(directory, nb)
-        else:
-            nb_url = nb
+        nb_url = os.path.join(directory, nb) if directory else nb
         chapter, section, title = REG.match(nb).groups()
         title = get_notebook_title(nb)
         if section == '00':
