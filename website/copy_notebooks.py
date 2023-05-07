@@ -98,8 +98,8 @@ def copy_notebooks():
 
         nbformat.write(content, os.path.join(NB_DEST_DIR, nb))
 
-        pagefile = os.path.join(PAGE_DEST_DIR, base + '.md')
-        htmlfile = base.lower() + '.html'
+        pagefile = os.path.join(PAGE_DEST_DIR, f'{base}.md')
+        htmlfile = f'{base.lower()}.html'
         with open(pagefile, 'w') as f:
             f.write(PAGEFILE.format(title=title,
                                     htmlfile=htmlfile,
