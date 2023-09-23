@@ -1,0 +1,12 @@
+import seaborn as sns
+no module named as seaborn
+/
+this error even after installing in conda install seaborn
+can anybody fix this
+
+**TO solve this error**
+You have to install seaborn on your device. If you are using it on Anconda and Google colab they have seaborn library by default.
+If you are using on pip, kindly run the following command on your Command Prompt
+
+pip install seaborn 
+and press Enter. 
