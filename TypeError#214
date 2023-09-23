@@ -1,0 +1,14 @@
+numpy float.64 is a non-iterable so you can not directly unpack it as you do with the iterables like list or tuple.
+However, you can get access it's value directly as- 
+
+import numpy as np
+
+# Create a numpy.float64 object
+my_float = np.float64(42.0)
+
+# Access its value
+value = my_float.item()
+print(value)  # This will print: 42.0
+
+numpy.float64 objects are typically used for numerical computations, and you rarely need to "unpack" them in the same way you would with iterable data structures. 
+Instead, you work with them directly as numeric values.
