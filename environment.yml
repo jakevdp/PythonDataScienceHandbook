@@ -3,5 +3,17 @@ channels:
   - conda-forge
 dependencies:
   - python=3.5
-  - pip:
-    - -r requirements.txt
+  - numpy<2
+  - libgfortran=3
+  - matplotlib
+  - pandas<1
+  - scikit-learn<1
+  - scikit-image<1
+  - scipy<1
+  - pillow
+  - seaborn<1
+  - line_profiler
+  - memory_profiler
+  - numexpr
+  - pandas-datareader
+  - netcdf4
