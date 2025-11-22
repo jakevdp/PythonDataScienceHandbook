@@ -2,6 +2,7 @@ name: data-science-handbook
 channels:
   - conda-forge
 dependencies:
-  - python=3.5
+  - python=3.10
+  - pip
   - pip:
-    - -r requirements.txt
+      - -r requirements.txt
