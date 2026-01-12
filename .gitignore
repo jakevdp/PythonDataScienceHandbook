@@ -69,6 +69,10 @@ target/
 # IPython Notebook
 .ipynb_checkpoints
 
+# Jupyter
+output/
+plugins/
+
 # pyenv
 .python-version
 
@@ -88,10 +92,12 @@ ENV/
 # Rope project settings
 .ropeproject
 
+# pytest
+.pytest_cache/
+.coverage.*
 
 # Emacs
 *~
-
 
 # Temporary data files
 notebooks/recipeitems-latest.json
@@ -100,3 +106,12 @@ notebooks/gistemp250.nc
 notebooks/marathon-data.csv
 notebooks/my_figure.png
 notebooks/hello.png
+
+# Modern Python
+__pypackages__/
+.dmypy.json
+dmypy.json
+.mypy_cache/
+
+
+**/*ignore*

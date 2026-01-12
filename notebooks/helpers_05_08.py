@@ -1,12 +1,47 @@
 
+"""
+Helper functions for Decision Trees and Random Forests notebook.
+
+This module provides visualization utilities for decision tree classifiers
+used in the Python Data Science Handbook.
+"""
+
 import numpy as np
-import matplotlib.pyplot as plt; plt.rcParams['figure.dpi'] = 600
+import matplotlib.pyplot as plt
 from sklearn.tree import DecisionTreeClassifier
 from ipywidgets import interact
+
+# Set high DPI for better quality plots
+plt.rcParams['figure.dpi'] = 600
 
 
 def visualize_tree(estimator, X, y, boundaries=True,
                    xlim=None, ylim=None, ax=None):
+    """
+    Visualize a decision tree classifier with decision boundaries.
+    
+    Parameters
+    ----------
+    estimator : sklearn.tree.DecisionTreeClassifier
+        The decision tree classifier to visualize
+    X : array-like, shape (n_samples, 2)
+        Training data features (must be 2D for visualization)
+    y : array-like, shape (n_samples,)
+        Training data labels
+    boundaries : bool, default=True
+        Whether to plot decision boundaries
+    xlim : tuple, optional
+        x-axis limits for the plot
+    ylim : tuple, optional
+        y-axis limits for the plot
+    ax : matplotlib.axes.Axes, optional
+        Axes object to plot on
+        
+    Returns
+    -------
+    None
+        Creates a visualization plot
+    """
     ax = ax or plt.gca()
     
     # Plot the training points
@@ -58,6 +93,21 @@ def visualize_tree(estimator, X, y, boundaries=True,
 
 
 def plot_tree_interactive(X, y):
+    """
+    Create an interactive decision tree visualization.
+    
+    Parameters
+    ----------
+    X : array-like, shape (n_samples, 2)
+        Training data features
+    y : array-like, shape (n_samples,)
+        Training data labels
+        
+    Returns
+    -------
+    ipywidgets.interactive
+        Interactive widget for controlling tree depth
+    """
     def interactive_tree(depth=5):
         clf = DecisionTreeClassifier(max_depth=depth, random_state=0)
         visualize_tree(clf, X, y)
@@ -66,6 +116,21 @@ def plot_tree_interactive(X, y):
 
 
 def randomized_tree_interactive(X, y):
+    """
+    Create an interactive visualization of randomized decision trees.
+    
+    Parameters
+    ----------
+    X : array-like, shape (n_samples, 2)
+        Training data features
+    y : array-like, shape (n_samples,)
+        Training data labels
+        
+    Returns
+    -------
+    None
+        Creates an interactive visualization
+    """
     N = int(0.75 * X.shape[0])
     
     xlim = (X[:, 0].min(), X[:, 0].max())

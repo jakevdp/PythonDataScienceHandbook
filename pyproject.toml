@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "python-data-science-handbook"
+description = "Jupyter notebooks for the Python Data Science Handbook"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Jake VanderPlas", email = "jakevdp@uw.edu"}
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Education",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "numpy>=1.11.1",
+    "pandas>=0.18.1",
+    "scipy>=0.17.1",
+    "scikit-learn>=0.17.1",
+    "scikit-image>=0.12.3",
+    "pillow>=3.4.2",
+    "matplotlib>=1.5.1",
+    "seaborn>=0.7.0",
+    "jupyter",
+    "notebook",
+    "line_profiler",
+    "memory_profiler",
+    "numexpr",
+    "pandas-datareader",
+    "netcdf4",
+]
+
+[project.urls]
+Homepage = "https://github.com/jakevdp/PythonDataScienceHandbook"
+Repository = "https://github.com/jakevdp/PythonDataScienceHandbook"
+Documentation = "https://jakevdp.github.io/PythonDataScienceHandbook/"
+
+[tool.setuptools]
+packages = []
+
+[tool.setuptools_scm]
+write_to = "tools/_version.py"

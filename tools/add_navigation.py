@@ -1,3 +1,10 @@
+"""
+Add navigation bars to all notebooks.
+
+This script adds previous/next navigation links and Colab badges to all notebooks
+in the project to improve user experience when browsing through the content.
+"""
+
 import os
 import itertools
 
@@ -9,7 +16,20 @@ from generate_contents import NOTEBOOK_DIR, REG, iter_notebooks, get_notebook_ti
 
 
 def prev_this_next(it):
-    a, b, c = itertools.tee(it,3)
+    """
+    Generate previous, current, and next items from an iterator.
+    
+    Parameters
+    ----------
+    it : iterator
+        Iterator to generate triples from
+        
+    Returns
+    -------
+    zip object
+        Zipped tuples of (previous, current, next) items
+    """
+    a, b, c = itertools.tee(it, 3)
     next(c)
     return zip(itertools.chain([None], a), b, itertools.chain(c, [None]))
 
@@ -26,6 +46,14 @@ COLAB_LINK = """
 
 
 def iter_navbars():
+    """
+    Generate navigation bars for all notebooks.
+    
+    Yields
+    ------
+    tuple
+        (notebook_path, navigation_bar) for each notebook
+    """
     for prev_nb, nb, next_nb in prev_this_next(iter_notebooks()):
         navbar = NAV_COMMENT
         if prev_nb:
@@ -42,22 +70,26 @@ def iter_navbars():
 
 
 def write_navbars():
+    """Write navigation bars to the beginning and end of all notebooks."""
     for nb_name, navbar in iter_navbars():
         nb = nbformat.read(nb_name, as_version=4)
         nb_file = os.path.basename(nb_name)
         is_comment = lambda cell: cell.source.startswith(NAV_COMMENT)
 
-        if is_comment(nb.cells[1]):
-            print("- amending navbar for {0}".format(nb_file))
+        # Add navbar at the beginning (after potential book info)
+        if len(nb.cells) > 1 and is_comment(nb.cells[1]):
+            print(f"- amending navbar for {nb_file}")
             nb.cells[1].source = navbar
         else:
-            print("- inserting navbar for {0}".format(nb_file))
+            print(f"- inserting navbar for {nb_file}")
             nb.cells.insert(1, new_markdown_cell(source=navbar))
 
-        if is_comment(nb.cells[-1]):
+        # Add navbar at the end
+        if nb.cells and is_comment(nb.cells[-1]):
             nb.cells[-1].source = navbar
         else:
             nb.cells.append(new_markdown_cell(source=navbar))
+        
         nbformat.write(nb, nb_name)
 
 
