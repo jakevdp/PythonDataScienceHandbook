@@ -56,3 +56,7 @@ The code in this repository, including all code samples in the notebooks listed 
 
 ### Text
 The text content of the book is released under the [CC-BY-NC-ND license](LICENSE-TEXT). Read more at [Creative Commons](https://creativecommons.org/licenses/by-nc-nd/3.0/us/legalcode).
+
+## Recent Contributions
+
+- **Pandas Index Intersection:** Added a note to clarify how the `&` operator behaves with numeric indexes and why `intersection()` is useful for finding common elements between indexes. See the [Introducing Pandas Objects notebook](notebooks/03.01-Introducing-Pandas-Objects.ipynb).
